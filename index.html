@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Analyzer</title>
+  <meta name="description"
+    content="Financial Analyzer - Powerful tools for analyzing and visualizing your business finances." />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <div>
+        <h1 class="main-title">Financial Analyzer</h1>
+        <p class="subtitle">Powerful tools for analyzing and visualizing your business finances.</p>
+        <p class="desc">Analyze data, discover insights, and make smarter financial decisions.</p>
+        <div class="header-buttons">
+          <button class="primary-btn">Get Started</button>
+          <button class="outline-btn">Learn More</button>
+        </div>
+      </div>
+      <div class="header-illustration">
+        <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="Finance Illustration" class="illustration-img" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Metrics Section -->
+  <section class="metrics">
+    
+    <div class="metric-card">
+      <div class="metric-card-header">
+        <div class="metric-icon metric-icon-green"><img src="svgs/metric-icon-1.svg" alt="metric-icon"></div>
+        <span class="metric-title">Revenue</span>
+      </div>
+      <div>
+        <div class="metric-value-row">
+          <span class="metric-value">$312,400</span>
+          <span class="metric-trend metric-trend-up"><img src="svgs/metric-trend-2.svg" alt="metric-icon">+7.2%</span>
+        </div>
+        <div class="metric-desc">This quarter</div>
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-card-header">
+        <div class="metric-icon metric-icon-yellow"><img src="svgs/metric-icon-2.svg" alt="metric-icon"></div>
+        <span class="metric-title">Expenses</span>
+      </div>
+      <div>
+        <div class="metric-value-row">
+          <span class="metric-value">$108,300</span>
+          <span class="metric-trend metric-trend-down"><img src="svgs/metric-trend-2.svg" alt="metric-trend">-2.1%</span>
+        </div>
+        <div class="metric-desc">This quarter</div>
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-card-header">
+        <div class="metric-icon metric-icon-blue"><img src="svgs/metric-icon-3.svg" alt="metric-icon"></div>
+        <span class="metric-title">Profit</span>
+      </div>
+      <div>
+        <div class="metric-value-row">
+          <span class="metric-value">$204,100</span>
+          <span class="metric-trend metric-trend-up"><img src="svgs/metric-trend-3.svg" alt="metric-trend">+11.6%</span>
+        </div>
+        <div class="metric-desc">Gross Margin</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Charts Section -->
+  <section class="charts">
+    <div class="charts-card">
+      <div class="charts-header">
+        <h2>Financial Data Overview</h2>
+        <nav class="charts-nav">
+          <a class="story-link" href="#">Portfolio</a>
+          <a class="story-link" href="#">Analytics</a>
+          <a class="story-link" href="#">Reports</a>
+        </nav>
+      </div>
+      <div class="chart-toggle">
+        <button class="toggle-btn active" id="barChartBtn">Bar Chart</button>
+        <button class="toggle-btn" id="pieChartBtn">Pie Chart</button>
+      </div>
+      <div class="chart-container">
+        <canvas id="financialChart"></canvas>
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; <span id="currentYear"></span> Financial Analyzer. All rights reserved.
+  </footer>
+  <script src="scripts.js"></script>
+</body>
+
+</html>
