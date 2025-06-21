@@ -151,63 +151,6 @@ a:hover {
     display: none;
   }
 }
-/* Stock Indices Section */
-.indices-section {
-  background: #fff;
-  padding: 18px 0 10px 0;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 18px;
-}
-.indices-container {
-  display: flex;
-  gap: 24px;
-  justify-content: center;
-  align-items: flex-end;
-  flex-wrap: wrap;
-}
-.index-card {
-  background: #f8fafc;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-  padding: 12px 18px 8px 18px;
-  min-width: 150px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.index-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 4px;
-}
-.index-name {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1a237e;
-}
-.index-value {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #388e3c;
-  margin-top: 2px;
-}
-.index-sparkline {
-  width: 80px !important;
-  height: 28px !important;
-  margin-top: 2px;
-}
-@media (max-width: 700px) {
-  .indices-container {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
-  .index-card {
-    min-width: unset;
-    width: 100%;
-  }
-}
 
 /* Metrics */
 .metrics {
