@@ -1,21 +1,20 @@
 /* CSS reset + variables */
 :root {
-  --primary: #1e293b;
-  --button-bg: #4f8ef7;
+  --primary-text: #1e293b;
   --primary-accent: #4f8ef7;
-  --background: #f8fafc;
-  --section-background: white;
-  --card-background: #fff;
+  --body-bg: #f8fafc;
+  --section-bg: white;
+  --card-bg: #fff;
   --card-border: #e5e7eb;
   --card-radius: 1.2rem;
   --card-shadow: 1px 4px 20px 9px rgba(30, 41, 59, 0.08);
-  --text: #1e293b;
+  --button-bg: #4f8ef7;
   --muted-text: #64748b;
 }
 
 html {
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 *,
@@ -25,14 +24,91 @@ html {
 }
 
 body {
-  min-height: 100vh;
-  background: var(--background);
+  background: var(--body-bg);
+  color: var(--primary-text);
   font-family: 'Inter', Arial, sans-serif;
-  color: var(--text);
   margin: 0;
   padding: 0;
+}
+
+.navbar {
+  /* max-width: 1160px; */
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  /* margin: 0 auto; */
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.logo-text span {
+  color: #4e46e9;
+}
+
+.logo-text .highlight {
+  color: #a855f7;
+}
+
+.subtitle {
+  margin-left: 12px;
+  font-size: 13px;
+  color: #666;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  font-size: 14px;
+  background-color: #f2f2f2;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
+
+.btn:hover {
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.btn-primary {
+  background-color: #7c3aed;
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #6d28d9;
 }
 
 a {
@@ -154,6 +230,44 @@ a:hover {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+main > .tabs {
+  background-color: var(--card-bg);
+  max-width: 1100px;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1.5px solid var(--card-border);
+  border-radius: 10px;
+  margin: 0 auto 2.5rem auto;
+  padding: 10px 2rem;
+}
+
+main > .tabs button {
+  border: none;
+  background-color: var(--card-bg);
+}
+    
 /* Metrics */
 .metrics {
   max-width: 1160px;
@@ -174,7 +288,7 @@ a:hover {
 }
 
 .metric-card {
-  background: var(--card-background);
+  background: var(--card-bg);
   border: 1.5px solid var(--card-border);
   border-radius: var(--card-radius);
   box-shadow: var(--card-shadow);
@@ -224,7 +338,7 @@ a:hover {
 .metric-title {
   font-size: 1.45rem;
   font-weight: 700;
-  color: var(--text);
+  color: var(--primary-text);
 }
 
 .metric-value-row {
@@ -287,7 +401,7 @@ a:hover {
 }
 
 .charts-card {
-  background: var(--card-background);
+  background: var(--card-bg);
   border-radius: 1.1rem;
   box-shadow: var(--card-shadow);
   padding: 2rem 2.5rem;
@@ -313,7 +427,7 @@ a:hover {
 .charts-header h2 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .charts-nav {
@@ -361,7 +475,7 @@ a:hover {
   border: none;
   border-radius: 0.6rem;
   background: #eff6ff;
-  color: var(--primary);
+  color: var(--primary-text);
   font-weight: 600;
   cursor: pointer;
   transition: background 0.14s, color 0.14s, transform 0.17s;
@@ -383,8 +497,8 @@ a:hover {
 .chart-container {
   width: 100%;
   max-width: 700px;
-  margin: 0 auto;
   min-height: 340px;
+  margin: 0 auto;
 }
 
 @media (max-width: 700px) {
@@ -415,4 +529,3 @@ a:hover {
     transform: none;
   }
 }
-

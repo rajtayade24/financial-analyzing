@@ -1,3 +1,6 @@
+
+
+
 function inrToUsd(inrAmount, exchangeRate = 83.20) {
   if (inrAmount < 0) {
     throw new Error("Amount cannot be negative.");
@@ -19,7 +22,7 @@ async function loadStockData() {
     companyCardList.innerHTML += `                                        
     <li class="company-card">
       <div class="company-card-header">
-        <span class="company-logo"><img src="/static/logos/${company.symbol}.png" alt="company-logo"></span>
+        <span class="company-logo"><img src="/static/logo/${company.symbol}.png" alt="company-logo"></span>
         <span class="company-name">${company.name}</span>
       </div>
       <div class="company-value-cont">
@@ -35,7 +38,6 @@ async function loadStockData() {
         <button class="details-btn"><a href="company1_reliance_industry.html">Details ></a></button>
       </div>
     </li>`;
-
   });
 }
 loadStockData();

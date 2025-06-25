@@ -1,0 +1,452 @@
+[
+    {
+        "name": "Reliance Industries",
+        "symbol": "RELIANCE.NS",
+        "price": 1470.0,
+        "previous_close": 1450.8,
+        "change_percent": 1.32,
+        "pe_ratio": 28.54369,
+        "market_capital": 19974949175296,
+        "industry": "Oil & Gas Refining & Marketing"
+    },
+    {
+        "name": "HDFC Bank",
+        "symbol": "HDFCBANK.NS",
+        "price": 1980.9,
+        "previous_close": 1960.9,
+        "change_percent": 1.02,
+        "pe_ratio": 21.444347,
+        "market_capital": 15187042107392,
+        "industry": "Banks - Regional"
+    },
+    {
+        "name": "Tata Consultancy Services (TCS)",
+        "symbol": "TCS.NS",
+        "price": 3410.7,
+        "previous_close": 3390.4,
+        "change_percent": 0.6,
+        "pe_ratio": 25.403694,
+        "market_capital": 12340219084800,
+        "industry": "Information Technology Services"
+    },
+    {
+        "name": "Bharti Airtel",
+        "symbol": "BHARTIARTL.NS",
+        "price": 1957.5,
+        "previous_close": 1933.6,
+        "change_percent": 1.24,
+        "pe_ratio": 34.911716,
+        "market_capital": 11734605627392,
+        "industry": "Telecom Services"
+    },
+    {
+        "name": "ICICI Bank",
+        "symbol": "ICICIBANK.NS",
+        "price": 1423.8,
+        "previous_close": 1424.1,
+        "change_percent": -0.02,
+        "pe_ratio": 19.994383,
+        "market_capital": 10159582609408,
+        "industry": "Banks - Regional"
+    },
+    {
+        "name": "State Bank of India",
+        "symbol": "SBIN.NS",
+        "price": 797.8,
+        "previous_close": 795.4,
+        "change_percent": 0.3,
+        "pe_ratio": 9.176443,
+        "market_capital": 7120061726720,
+        "industry": "Banks - Regional"
+    },
+    {
+        "name": "Infosys",
+        "symbol": "INFY.NS",
+        "price": 1600.3,
+        "previous_close": 1581.6,
+        "change_percent": 1.18,
+        "pe_ratio": 24.324366,
+        "market_capital": 6642701172736,
+        "industry": "Information Technology Services"
+    },
+    {
+        "name": "Life Insurance Corporation of India (LIC)",
+        "symbol": "LICI.NS",
+        "price": 949.75,
+        "previous_close": 945.65,
+        "change_percent": 0.43,
+        "pe_ratio": 12.47701,
+        "market_capital": 6009068191744,
+        "industry": "Insurance - Life"
+    },
+    {
+        "name": "Hindustan Unilever",
+        "symbol": "HINDUNILVR.NS",
+        "price": 2283.0,
+        "previous_close": 2263.1,
+        "change_percent": 0.88,
+        "pe_ratio": 50.441895,
+        "market_capital": 5387697782784,
+        "industry": "Household & Personal Products"
+    },
+    {
+        "name": "ITC",
+        "symbol": "ITC.NS",
+        "price": 417.55,
+        "previous_close": 414.35,
+        "change_percent": 0.77,
+        "pe_ratio": 26.51111,
+        "market_capital": 5225262350336,
+        "industry": "Tobacco"
+    },
+    {
+        "name": "Larsen & Toubro",
+        "symbol": "LT.NS",
+        "price": 3628.8,
+        "previous_close": 3604.8,
+        "change_percent": 0.67,
+        "pe_ratio": 33.22164,
+        "market_capital": 4990616207360,
+        "industry": "Engineering & Construction"
+    },
+    {
+        "name": "HCLTech",
+        "symbol": "HCLTECH.NS",
+        "price": 1714.0,
+        "previous_close": 1691.8,
+        "change_percent": 1.31,
+        "pe_ratio": 26.731129,
+        "market_capital": 4643071983616,
+        "industry": "Information Technology Services"
+    },
+    {
+        "name": "Kotak Mahindra Bank",
+        "symbol": "KOTAKBANK.NS",
+        "price": 2206.5,
+        "previous_close": 2223.6,
+        "change_percent": -0.77,
+        "pe_ratio": 19.847095,
+        "market_capital": 4387272654848,
+        "industry": "Banks - Regional"
+    },
+    {
+        "name": "Maruti Suzuki",
+        "symbol": "MARUTI.NS",
+        "price": 12717.0,
+        "previous_close": 12611.0,
+        "change_percent": 0.84,
+        "pe_ratio": 27.552214,
+        "market_capital": 3998263017472,
+        "industry": "Auto Manufacturers"
+    },
+    {
+        "name": "Sun Pharmaceutical Industries",
+        "symbol": "SUNPHARMA.NS",
+        "price": 1676.9,
+        "previous_close": 1661.7,
+        "change_percent": 0.91,
+        "pe_ratio": 36.83066,
+        "market_capital": 4023436705792,
+        "industry": "Drug Manufacturers - Specialty & Generic"
+    },
+    {
+        "name": "Mahindra & Mahindra",
+        "symbol": "M&M.NS",
+        "price": 3185.0,
+        "previous_close": 3150.1,
+        "change_percent": 1.11,
+        "pe_ratio": 27.700468,
+        "market_capital": 3820853657600,
+        "industry": "Auto Manufacturers"
+    },
+    {
+        "name": "Axis Bank",
+        "symbol": "AXISBANK.NS",
+        "price": 1218.7,
+        "previous_close": 1221.2,
+        "change_percent": -0.2,
+        "pe_ratio": 13.523079,
+        "market_capital": 3779286007808,
+        "industry": "Banks - Regional"
+    },
+    {
+        "name": "UltraTech Cement",
+        "symbol": "ULTRACEMCO.NS",
+        "price": 11690.0,
+        "previous_close": 11579.0,
+        "change_percent": 0.96,
+        "pe_ratio": 57.038303,
+        "market_capital": 3438660026368,
+        "industry": "Building Materials"
+    },
+    {
+        "name": "Hindustan Aeronautics Limited (HAL)",
+        "symbol": "HAL.NS",
+        "price": 4838.2,
+        "previous_close": 4886.5,
+        "change_percent": -0.99,
+        "pe_ratio": 38.677753,
+        "market_capital": 3235667247104,
+        "industry": "Aerospace & Defense"
+    },
+    {
+        "name": "NTPC",
+        "symbol": "NTPC.NS",
+        "price": 330.65,
+        "previous_close": 329.95,
+        "change_percent": 0.21,
+        "pe_ratio": 16.240175,
+        "market_capital": 3212519407616,
+        "industry": "Utilities - Regulated Electric"
+    },
+    {
+        "name": "Bajaj Finance",
+        "symbol": "BAJFINANCE.NS",
+        "price": 921.5,
+        "previous_close": 916.5,
+        "change_percent": 0.55,
+        "pe_ratio": 34.320297,
+        "market_capital": 5720782143488,
+        "industry": "Credit Services"
+    },
+    {
+        "name": "Titan Company",
+        "symbol": "TITAN.NS",
+        "price": 3605.5,
+        "previous_close": 3526.0,
+        "change_percent": 2.25,
+        "pe_ratio": 95.56056,
+        "market_capital": 3198240686080,
+        "industry": "Luxury Goods"
+    },
+    {
+        "name": "Bharat Electronics",
+        "symbol": "BEL.NS",
+        "price": 411.75,
+        "previous_close": 418.5,
+        "change_percent": -1.61,
+        "pe_ratio": 56.559063,
+        "market_capital": 3027062489088,
+        "industry": "Aerospace & Defense"
+    },
+    {
+        "name": "Adani Ports & SEZ",
+        "symbol": "ADANIPORTS.NS",
+        "price": 1390.6,
+        "previous_close": 1389.5,
+        "change_percent": 0.08,
+        "pe_ratio": 27.049212,
+        "market_capital": 3003890794496,
+        "industry": "Marine Shipping"
+    },
+    {
+        "name": "Adani Enterprises",
+        "symbol": "ADANIENT.NS",
+        "price": 2528.7,
+        "previous_close": 2505.6,
+        "change_percent": 0.92,
+        "pe_ratio": 41.7002,
+        "market_capital": 2918574718976,
+        "industry": "Thermal Coal"
+    },
+    {
+        "name": "Wipro",
+        "symbol": "WIPRO.NS",
+        "price": 267.7,
+        "previous_close": 264.97,
+        "change_percent": 1.03,
+        "pe_ratio": 21.364727,
+        "market_capital": 2802926223360,
+        "industry": "Information Technology Services"
+    },
+    {
+        "name": "Power Grid Corporation of India",
+        "symbol": "POWERGRID.NS",
+        "price": 288.95,
+        "previous_close": 285.95,
+        "change_percent": 1.05,
+        "pe_ratio": 17.640417,
+        "market_capital": 2687408537600,
+        "industry": "Utilities - Regulated Electric"
+    },
+    {
+        "name": "Tata Motors",
+        "symbol": "TATAMOTORS.NS",
+        "price": 675.45,
+        "previous_close": 673.65,
+        "change_percent": 0.27,
+        "pe_ratio": 10.401139,
+        "market_capital": 2486642147328,
+        "industry": "Auto Manufacturers"
+    },
+    {
+        "name": "JSW Steel",
+        "symbol": "JSWSTEEL.NS",
+        "price": 1015.85,
+        "previous_close": 1007.0,
+        "change_percent": 0.88,
+        "pe_ratio": 71.03846,
+        "market_capital": 2479161606144,
+        "industry": "Steel"
+    },
+    {
+        "name": "Coal India",
+        "symbol": "COALINDIA.NS",
+        "price": 393.3,
+        "previous_close": 392.65,
+        "change_percent": 0.17,
+        "pe_ratio": 6.8554993,
+        "market_capital": 2423801511936,
+        "industry": "Thermal Coal"
+    },
+    {
+        "name": "Bajaj Auto",
+        "symbol": "BAJAJ-AUTO.NS",
+        "price": 8391.5,
+        "previous_close": 8377.0,
+        "change_percent": 0.17,
+        "pe_ratio": 32.004192,
+        "market_capital": 2343393296384,
+        "industry": "Auto Manufacturers"
+    },
+    {
+        "name": "Nestl\u00e9 India",
+        "symbol": "NESTLEIND.NS",
+        "price": 2427.7,
+        "previous_close": 2365.8,
+        "change_percent": 2.62,
+        "pe_ratio": 72.77278,
+        "market_capital": 2340683776000,
+        "industry": "Packaged Foods"
+    },
+    {
+        "name": "Asian Paints",
+        "symbol": "ASIANPAINT.NS",
+        "price": 2284.1,
+        "previous_close": 2275.3,
+        "change_percent": 0.39,
+        "pe_ratio": 59.746277,
+        "market_capital": 2189864861696,
+        "industry": "Specialty Chemicals"
+    },
+    {
+        "name": "DLF",
+        "symbol": "DLF.NS",
+        "price": 849.2,
+        "previous_close": 849.5,
+        "change_percent": -0.04,
+        "pe_ratio": 48.058857,
+        "market_capital": 2102033383424,
+        "industry": "Real Estate - Development"
+    },
+    {
+        "name": "Trent",
+        "symbol": "TRENT.NS",
+        "price": 6126.0,
+        "previous_close": 6057.5,
+        "change_percent": 1.13,
+        "pe_ratio": 140.47237,
+        "market_capital": 2200348917760,
+        "industry": "Apparel Retail"
+    },
+    {
+        "name": "InterGlobe Aviation (IndiGo)",
+        "symbol": "INDIGO.NS",
+        "price": 5606.5,
+        "previous_close": 5606.5,
+        "change_percent": 0.0,
+        "pe_ratio": 29.850388,
+        "market_capital": 2166968418304,
+        "industry": "Airlines"
+    },
+    {
+        "name": "Adani Power",
+        "symbol": "ADANIPOWER.NS",
+        "price": 553.25,
+        "previous_close": 546.85,
+        "change_percent": 1.17,
+        "pe_ratio": 17.117884,
+        "market_capital": 2133852028928,
+        "industry": "Utilities - Independent Power Producers"
+    },
+    {
+        "name": "Tata Steel",
+        "symbol": "TATASTEEL.NS",
+        "price": 156.13,
+        "previous_close": 154.79,
+        "change_percent": 0.87,
+        "pe_ratio": 56.981754,
+        "market_capital": 1947222147072,
+        "industry": "Steel"
+    },
+    {
+        "name": "Jio Financial Services",
+        "symbol": "JIOFIN.NS",
+        "price": 303.45,
+        "previous_close": 300.8,
+        "change_percent": 0.88,
+        "pe_ratio": 119.94072,
+        "market_capital": 1928182104064,
+        "industry": "Asset Management"
+    },
+    {
+        "name": "Hindustan Zinc",
+        "symbol": "HINDZINC.NS",
+        "price": 443.5,
+        "previous_close": 442.9,
+        "change_percent": 0.14,
+        "pe_ratio": 18.109432,
+        "market_capital": 1873929437184,
+        "industry": "Other Industrial Metals & Mining"
+    },
+    {
+        "name": "Grasim Industries",
+        "symbol": "GRASIM.NS",
+        "price": 2799.7,
+        "previous_close": 2780.9,
+        "change_percent": 0.68,
+        "pe_ratio": 50.33621,
+        "market_capital": 1899355701248,
+        "industry": "Building Materials"
+    },
+    {
+        "name": "SBI Life Insurance",
+        "symbol": "SBILIFE.NS",
+        "price": 1842.7,
+        "previous_close": 1843.0,
+        "change_percent": -0.02,
+        "pe_ratio": 76.333885,
+        "market_capital": 1848080596992,
+        "industry": "Insurance - Life"
+    },
+    {
+        "name": "Indian Railway Finance",
+        "symbol": "IRFC.NS",
+        "price": 140.27,
+        "previous_close": 138.62,
+        "change_percent": 1.19,
+        "pe_ratio": 28.166668,
+        "market_capital": 1833118597120,
+        "industry": "Credit Services"
+    },
+    {
+        "name": "Divis Laboratories",
+        "symbol": "DIVISLAB.NS",
+        "price": 6557.5,
+        "previous_close": 6565.5,
+        "change_percent": -0.12,
+        "pe_ratio": 79.26387,
+        "market_capital": 1740812976128,
+        "industry": "Drug Manufacturers - Specialty & Generic"
+    },
+    {
+        "name": "Vedanta",
+        "symbol": "VEDL.NS",
+        "price": 442.8,
+        "previous_close": 445.8,
+        "change_percent": -0.67,
+        "pe_ratio": 11.456661,
+        "market_capital": 1745172168704,
+        "industry": "Other Industrial Metals & Mining"
+    }
+]

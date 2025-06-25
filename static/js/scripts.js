@@ -85,7 +85,8 @@ function drawPieChart() {
                 legend: { display: true, position: "bottom" },
                 tooltip: { backgroundColor: "#fff", borderColor: "#ddd", borderWidth: 1, titleColor: "#1e293b", bodyColor: "#1e293b" }
             }
-        }
+        },
+
     });
 }
 
@@ -104,3 +105,64 @@ document.getElementById("pieChartBtn").addEventListener("click", function () {
 // Set current year in footer and draw first chart
 document.getElementById("currentYear").textContent = new Date().getFullYear();
 drawBarChart();
+
+async function getCompanyData() {
+    let response = fetch("/static/js/stock_data.json")
+    let companyData = (await response).json()
+    return companyData;
+}
+
+
+function inrToUsd(inrAmount, exchangeRate = 83.20) {
+    if (inrAmount < 0) {
+        throw new Error("Amount cannot be negative.");
+    }
+    const usdAmount = inrAmount / exchangeRate;
+    return usdAmount.toFixed(2); // returns a string with 2 decimal places
+}
+let currentChart = null;
+const newctx = document.getElementById("company-data").getContext("2d")
+
+function deletePriviousChart() {
+    if (currentChart) {
+        currentChart.destroy();
+    }
+}
+async function showChart() {
+    deletePriviousChart();
+    company_data = await getCompanyData();
+    data = company_data.map(c => c.name)
+    console.log(data)
+    currentChart = new Chart(newctx, {
+        type: "line",
+        data: {
+            labels: company_data.map(company => company.name),
+            datasets: [
+                {
+                    label: "market_capital",
+                    data: company_data.map(company => inrToUsd(company.market_capital)),
+                    // data: company_data.map(company => inrToUsd(company.price)),
+                    fill: false,
+                    tension: 0.1,
+                    hoverBorderWidth: 50,
+                    backgroundColor: ["red", "blue", "pink"], 
+                    pointBorderColor: "grey",
+                    borderColor: "#4f8ef7"
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    ticks: {
+                        callback: function (value, index, ticks) {
+                            return '$' + value;
+                        }
+                    }
+                }
+            }
+        }
+    })
+}
+
+showChart()

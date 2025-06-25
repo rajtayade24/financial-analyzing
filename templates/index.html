@@ -5,22 +5,65 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Financial Analyzer</title>
-  <meta name="description"
-    content="Financial Analyzer - Powerful tools for analyzing and visualizing your business finances." />
+  <meta name="description" content="Financial Analyzer - Powerful tools for analyzing and visualizing your business finances." />
   <link rel="icon" href="/static/icons/main.ico">
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/company_section.css" />
-
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/company_section.css') }}">
 
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- <script src="{{ url_for('static', filename='js/company_data.js') }}"></script> -->
 </head>
 
 <body>
-  <!-- Header -->
+  <header>
+    <nav class="navbar">
+      <div class="logo-section">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-chart-column h-6 w-6" data-lov-id="src/pages/Index.tsx:27:16" data-lov-name="BarChart3"
+          data-component-path="src/pages/Index.tsx" data-component-line="27" data-component-file="Index.tsx"
+          data-component-name="BarChart3" data-component-content="%7B%22className%22%3A%22h-6%20w-6%22%7D">
+          <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+          <path d="M18 17V9"></path>
+          <path d="M13 17V5"></path>
+          <path d="M8 17v-3"></path>
+        </svg>
+        <div class="logo-text">
+          <span>logo</span><span class="highlight"></span>
+        </div>
+        <div class="subtitle">Your Financial Command Center</div>
+      </div>
+
+      <div class="buttons">
+        <button class="btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-credit-card h-4 w-4 mr-2" data-lov-id="src/pages/Index.tsx:38:16"
+            data-lov-name="CreditCard" data-component-path="src/pages/Index.tsx" data-component-line="38"
+            data-component-file="Index.tsx" data-component-name="CreditCard"
+            data-component-content="%7B%22className%22%3A%22h-4%20w-4%20mr-2%22%7D">
+            <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+            <line x1="2" x2="22" y1="10" y2="10"></line>
+          </svg>
+          Connect Bank
+        </button>
+        <button class="btn btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-wallet h-4 w-4 mr-2" data-lov-id="src/pages/Index.tsx:42:16" data-lov-name="Wallet"
+            data-component-path="src/pages/Index.tsx" data-component-line="42" data-component-file="Index.tsx"
+            data-component-name="Wallet" data-component-content="%7B%22className%22%3A%22h-4%20w-4%20mr-2%22%7D">
+            <path
+              d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1">
+            </path>
+            <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>
+          </svg>
+          Add Account
+        </button>
+      </div>
+    </nav>
+  </header>
+
   <header class="header">
     <div class="header-container">
       <div>
@@ -108,41 +151,107 @@
     </div>
   </section>
 
-  <section id="company-card-section">
-    <h1> Nifty 50 Companies List 2025 : Top 50 Stocks in India </h1>
+  <main>
+    <nav class="tabs">
+      <button class="tab">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-dollar-sign h-5 w-5 opacity-80" data-lov-id="src/pages/Index.tsx:57:16"
+          data-lov-name="DollarSign" data-component-path="src/pages/Index.tsx" data-component-line="57"
+          data-component-file="Index.tsx" data-component-name="DollarSign"
+          data-component-content="%7B%22className%22%3A%22h-5%20w-5%20opacity-80%22%7D">
+          <line x1="12" x2="12" y1="2" y2="22"></line>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+        Portfolio Tracker
+      </button>
+      <button class="tab">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-chart-column h-4 w-4 mr-2" data-lov-id="src/pages/Index.tsx:138:14"
+          data-lov-name="BarChart3" data-component-path="src/pages/Index.tsx" data-component-line="138"
+          data-component-file="Index.tsx" data-component-name="BarChart3"
+          data-component-content="%7B%22className%22%3A%22h-4%20w-4%20mr-2%22%7D">
+          <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+          <path d="M18 17V9"></path>
+          <path d="M13 17V5"></path>
+          <path d="M8 17v-3"></path>
+        </svg>
+        insights
+      </button>
+      <button class="tab">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-calculator h-4 w-4 mr-2" data-lov-id="src/pages/Index.tsx:134:14"
+          data-lov-name="Calculator" data-component-path="src/pages/Index.tsx" data-component-line="134"
+          data-component-file="Index.tsx" data-component-name="Calculator"
+          data-component-content="%7B%22className%22%3A%22h-4%20w-4%20mr-2%22%7D">
+          <rect width="16" height="20" x="4" y="2" rx="2"></rect>
+          <line x1="8" x2="16" y1="6" y2="6"></line>
+          <line x1="16" x2="16" y1="14" y2="18"></line>
+          <path d="M16 10h.01"></path>
+          <path d="M12 10h.01"></path>
+          <path d="M8 10h.01"></path>
+          <path d="M12 14h.01"></path>
+          <path d="M8 14h.01"></path>
+          <path d="M12 18h.01"></path>
+          <path d="M8 18h.01"></path>
+        </svg>
+        Expense Analyzer
+      </button>
+      <button class="tab">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-target h-4 w-4 text-green-400" data-lov-id="src/pages/Index.tsx:147:14"
+          data-lov-name="Target" data-component-path="src/pages/Index.tsx" data-component-line="147"
+          data-component-file="Index.tsx" data-component-name="Target"
+          data-component-content="%7B%22className%22%3A%22h-4%20w-4%20text-green-400%22%7D">
+          <circle cx="12" cy="12" r="10"></circle>
+          <circle cx="12" cy="12" r="6"></circle>
+          <circle cx="12" cy="12" r="2"></circle>
+        </svg>
+        Goal Tracker
+      </button>
+    </nav>
+    
+    <section class="company-price-analylizer">
+      <canvas id="company-data" width="500px" height="300px"></canvas>
+    </section>
+    <section id="company-card-section">
+      <h1> Nifty 50 Companies List 2025 : Top 50 Stocks in India </h1>
+      <ul id="company-card-list">
+        <li class="company-card">
+          <div class="company-card-header">
+            <span class="company-logo"><img src="/static/logos/RELIANCE.NS.png" alt="company-logo"></span>
+            <span class="company-name">Reliance Industries</span>
+          </div>
+          <div class="company-value-cont">
+            <span class="company-value">$260,000</span>
+            <span class="company-trend">
+              <img src="/static/svgs/trand-increase.svg" alt="metric-trend">
+              <span class="trend-rate">+12%</span>
+            </span>
+          </div>
+          <div class="company-industry-cont">
+            <div class="company-stock-price">1490</div>
+            <span class="company-industry">Oil Gas & Consumable Fuels</span>
+            <button class="details-btn"><a href="">Details ></a></button>
+          </div>
+        </li>
+        <div class="loader"></div>
+        
+      </ul>
+    </section>
 
-    <ul id="company-card-list"> 
-      <li class="company-card">
-        <div class="company-card-header">
-          <span class="company-logo"><img src="logos/HDB_BIG.svg" alt="company-logo"></span>
-          <span class="company-name">HDFC Bank</span>
-        </div>
-        <div class="company-value-cont">
-          <span class="company-value">$140,000</span>
-          <span class="company-trend">
-            <img src="svgs/metric-trend-3.svg" alt="metric-trend">
-            <span class="trend-rate">+9%</span>
-          </span>
-        </div>
-        <div class="company-industry-cont">
-          <div class="company-stock-price">1245</div>
-          <span class="company-industry">Financial Services</span>
-          <button class="details-btn"><a href="">Details ></a></button>
-        </div>
-      </li>
-    </ul>
-  </section>
-
-  
-  <!-- Footer -->
-  <footer class="footer">
-    &copy; <span id="currentYear"></span> Financial Analyzer. All rights reserved.
-  </footer>
-
-  <script src="js/scripts.js"></script>
-
-  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/company_data.js') }}"></script>
+    
+    <!-- Footer -->
+    <footer class="footer">
+      &copy; <span id="currentYear"></span> Financial Analyzer. All rights reserved.
+    </footer>  
+    
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/company_data.js') }}"></script>
+  </main>
 </body>
 
 </html>

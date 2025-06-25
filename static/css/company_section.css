@@ -1,13 +1,41 @@
-#company-card-list,
 #company-card-section {
-  list-style-type: upper-roman;
   max-width: 1160px;
   width: 100%;
   margin: 0 auto 3.5rem auto;
   padding: 0 2rem;
+}
+
+#company-card-list {
+  list-style-type: upper-roman;
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+  padding: 0;
+}
+
+#company-card-list {
+  background-color: #f8f9fa;
+}
+
+#company-card-list .loader {
+  border: 8px solid #e0e0e0;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  align-self: center;
+  justify-self: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .company-card {
@@ -36,7 +64,7 @@
 
 .company-card-header .company-logo img {
   max-height: 25px;
-  max-width: 150px;
+  max-width: 40px;
 }
 
 .company-value-cont {

@@ -1,5 +1,7 @@
 from flask import Flask, render_template, jsonify
 import yfinance as yf
+import json
+# from livereload import Server
 
 app = Flask(__name__)
 
@@ -14,7 +16,7 @@ companies = {
     "Infosys": "INFY.NS",
     "Life Insurance Corporation of India (LIC)": "LICI.NS",
     "Hindustan Unilever": "HINDUNILVR.NS",
-    "Housing Development Finance Corporation (HDFC)": "HDFC.NS",
+    # "Housing Development Finance Corporation (HDFC)": "HDFC.NS",
     "ITC": "ITC.NS",
     "Larsen & Toubro": "LT.NS",
     "HCLTech": "HCLTECH.NS",
@@ -37,14 +39,14 @@ companies = {
     "JSW Steel": "JSWSTEEL.NS",
     "Coal India": "COALINDIA.NS",
     "Bajaj Auto": "BAJAJ-AUTO.NS",
-    "Eternal (formerly Zomato)": "ZOMATO.NS",
+    # "Eternal (formerly Zomato)": "ZOMATO.NS",
     "Nestlé India": "NESTLEIND.NS",
     "Asian Paints": "ASIANPAINT.NS",
     "DLF": "DLF.NS",
     "Trent": "TRENT.NS",
     "InterGlobe Aviation (IndiGo)": "INDIGO.NS",
     "Adani Power": "ADANIPOWER.NS",
-    "Zomato": "ZOMATO.NS",
+    # "Zomato": "ZOMATO.NS",
     "Tata Steel": "TATASTEEL.NS",
     "Jio Financial Services": "JIOFIN.NS",
     "Hindustan Zinc": "HINDZINC.NS",
@@ -55,7 +57,67 @@ companies = {
     "Vedanta": "VEDL.NS"
 }
 
+# def fetch_and_save_stock_data():
+#     stock_info = []
 
+#     for name, symbol in companies.items():
+#         try:
+#             ticker = yf.Ticker(symbol)
+#             info = ticker.info
+#             hist = ticker.history(period="2d")
+
+#             if not hist.empty and len(hist) >= 2:
+#                 price = round(hist['Close'].iloc[-1], 2)
+#                 previous_close = round(hist['Close'].iloc[-2], 2)
+#             elif not hist.empty:
+#                 price = round(hist['Close'].iloc[-1], 2)
+#                 previous_close = price
+#             else:
+#                 price = previous_close = None
+
+#             change_percent = round(((price - previous_close) / previous_close) * 100, 2) if price and previous_close else None
+
+#             stock_info.append({
+#                 "name": name,
+#                 "symbol": symbol,
+#                 "price": price,
+#                 "previous_close": previous_close,
+#                 "change_percent": change_percent,
+#                 "pe_ratio": info.get("trailingPE"),
+#                 "market_capital": info.get("marketCap"),
+#                 "industry": info.get("industry")
+#             })
+
+#         except Exception as e:
+#             stock_info.append({
+#                 "name": name,
+#                 "symbol": symbol,
+#                 "price": None,
+#                 "previous_close": None,
+#                 "change_percent": None,
+#                 "pe_ratio": None,
+#                 "market_capital": None,
+#                 "industry": None,
+#                 "error": str(e)
+#             })
+
+#     with open("static/js/stock_data.json", "w") as f:
+#         json.dump(stock_info, f, indent=4)
+
+#     return stock_info
+
+# @app.route("/")
+# def index():
+#     return render_template("index.html")
+
+# @app.route("/stock-data")
+# def stock_data():
+#     data = fetch_and_save_stock_data()
+#     return jsonify(data)
+
+# if __name__ == "__main__":
+#     fetch_and_save_stock_data()  # <- This runs once when server starts
+#     app.run(debug=True)
 
 @app.route("/")
 def index():
@@ -111,7 +173,18 @@ def stock_data():
                 "error": str(e)
             })
 
+    # Save to JSON
+    with open("static/js/stock_data.json", "w") as f:
+        json.dump(stock_info, f, indent=4)
+
     return jsonify(stock_info)
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+# if __name__ == "__main__":
+#     server = Server(app.wsgi_app)
+#     server.watch('static/')      # watches CSS, JS, logos
+#     server.watch('templates/')   # watches index.html
+#     server.serve(port=5000, debug=True)
