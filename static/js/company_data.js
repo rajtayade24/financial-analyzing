@@ -71,3 +71,11 @@ loadStockData();
 //   });
 // }
 // getStockData();
+
+
+const canvas = document.querySelector("canvas");
+console.log(canvas.getAttribute("style")); // Shows inline styles only
+console.log(getComputedStyle(canvas));     // Shows ALL applied styles
+canvas.removeAttribute("style");
+canvas.removeAttribute("width");
+canvas.removeAttribute("height");

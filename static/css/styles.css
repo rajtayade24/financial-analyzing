@@ -31,6 +31,12 @@ body {
   padding: 0;
 }
 
+header:first-child {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
 .navbar {
   /* max-width: 1160px; */
   background-color: #ffffff;
@@ -230,27 +236,7 @@ a:hover {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-main > .tabs {
+main>.tabs {
   background-color: var(--card-bg);
   max-width: 1100px;
   width: 100%;
@@ -263,11 +249,11 @@ main > .tabs {
   padding: 10px 2rem;
 }
 
-main > .tabs button {
+main>.tabs button {
   border: none;
   background-color: var(--card-bg);
 }
-    
+
 /* Metrics */
 .metrics {
   max-width: 1160px;

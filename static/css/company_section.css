@@ -1,3 +1,28 @@
+.company-price-analylizer {
+  width: 90vw;
+  height: 80vh;
+  margin: 2rem auto;
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 2px solid black;
+}
+
+#company-data {
+  appearance: none;
+  all: unset;
+  width: auto !important;
+  height: min-content !important;
+  pointer-events: all !important;
+  margin: 1rem 1rem 1rem 0;
+  cursor: grab;
+  transition: transform 0.1s ease-out;
+}
+
+#individual-company-data {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 #company-card-section {
   max-width: 1160px;
   width: 100%;

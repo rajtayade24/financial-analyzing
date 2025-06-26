@@ -1,9 +1,9 @@
-from flask import Flask, render_template, jsonify
+
+from flask import Flask, render_template, jsonify;
 import yfinance as yf
 import json
-# from livereload import Server
-
-app = Flask(__name__)
+import os
+from datetime import datetime
 
 # Dictionary of companies and their NSE ticker symbols
 companies = {
@@ -57,67 +57,8 @@ companies = {
     "Vedanta": "VEDL.NS"
 }
 
-# def fetch_and_save_stock_data():
-#     stock_info = []
 
-#     for name, symbol in companies.items():
-#         try:
-#             ticker = yf.Ticker(symbol)
-#             info = ticker.info
-#             hist = ticker.history(period="2d")
-
-#             if not hist.empty and len(hist) >= 2:
-#                 price = round(hist['Close'].iloc[-1], 2)
-#                 previous_close = round(hist['Close'].iloc[-2], 2)
-#             elif not hist.empty:
-#                 price = round(hist['Close'].iloc[-1], 2)
-#                 previous_close = price
-#             else:
-#                 price = previous_close = None
-
-#             change_percent = round(((price - previous_close) / previous_close) * 100, 2) if price and previous_close else None
-
-#             stock_info.append({
-#                 "name": name,
-#                 "symbol": symbol,
-#                 "price": price,
-#                 "previous_close": previous_close,
-#                 "change_percent": change_percent,
-#                 "pe_ratio": info.get("trailingPE"),
-#                 "market_capital": info.get("marketCap"),
-#                 "industry": info.get("industry")
-#             })
-
-#         except Exception as e:
-#             stock_info.append({
-#                 "name": name,
-#                 "symbol": symbol,
-#                 "price": None,
-#                 "previous_close": None,
-#                 "change_percent": None,
-#                 "pe_ratio": None,
-#                 "market_capital": None,
-#                 "industry": None,
-#                 "error": str(e)
-#             })
-
-#     with open("static/js/stock_data.json", "w") as f:
-#         json.dump(stock_info, f, indent=4)
-
-#     return stock_info
-
-# @app.route("/")
-# def index():
-#     return render_template("index.html")
-
-# @app.route("/stock-data")
-# def stock_data():
-#     data = fetch_and_save_stock_data()
-#     return jsonify(data)
-
-# if __name__ == "__main__":
-#     fetch_and_save_stock_data()  # <- This runs once when server starts
-#     app.run(debug=True)
+app = Flask(__name__)
 
 @app.route("/")
 def index():
@@ -130,20 +71,19 @@ def stock_data():
     for name, symbol in companies.items():
         try:
             ticker = yf.Ticker(symbol)
-            info = ticker.info  # Contains metadata like P/E ratio, market cap, industry
-            hist = ticker.history(period="2d")  # Last two days for comparison
+            info = ticker.info
+            # info = ticker.get_info()
+            hist = ticker.history(period="2d")
 
-            # Extract current and previous close price
             if not hist.empty and len(hist) >= 2:
                 price = round(hist['Close'].iloc[-1], 2)
                 previous_close = round(hist['Close'].iloc[-2], 2)
             elif not hist.empty:
                 price = round(hist['Close'].iloc[-1], 2)
-                previous_close = price  # fallback
+                previous_close = price
             else:
                 price = previous_close = None
 
-            # Calculate change percent
             if price and previous_close:
                 change_percent = round(((price - previous_close) / previous_close) * 100, 2)
             else:
@@ -173,18 +113,28 @@ def stock_data():
                 "error": str(e)
             })
 
-    # Save to JSON
-    with open("static/js/stock_data.json", "w") as f:
-        json.dump(stock_info, f, indent=4)
+    # Save with timestamp as key
+    file_path = "static/js/stock_data_append.json"
+ 
+    # Use this:
+    # timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M.%f")
+
+    if os.path.exists(file_path):
+        with open(file_path, "r") as f:
+            try:
+                all_data = json.load(f)
+            except json.JSONDecodeError:
+                all_data = {}
+    else:
+        all_data = {}
+
+    all_data[timestamp] = stock_info
+
+    with open(file_path, "w") as f:
+        json.dump(all_data, f, indent=4)
 
     return jsonify(stock_info)
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-# if __name__ == "__main__":
-#     server = Server(app.wsgi_app)
-#     server.watch('static/')      # watches CSS, JS, logos
-#     server.watch('templates/')   # watches index.html
-#     server.serve(port=5000, debug=True)
