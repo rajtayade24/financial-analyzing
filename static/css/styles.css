@@ -1,10 +1,10 @@
 /* CSS reset + variables */
 :root {
-  --primary-text: #1e293b;
+  --primary-text: white;
   --primary-accent: #4f8ef7;
-  --body-bg: #f8fafc;
-  --section-bg: white;
-  --card-bg: #fff;
+  --body-bg: linear-gradient(135deg, #00010F, #0f172a);
+  --head-section-bg: linear-gradient(to right, #0f172a, #1e1b4b, #3b0764);
+  --section-bg: #0B1325;
   --card-border: #e5e7eb;
   --card-radius: 1.2rem;
   --card-shadow: 1px 4px 20px 9px rgba(30, 41, 59, 0.08);
@@ -32,20 +32,81 @@ body {
 }
 
 header:first-child {
+  display: flex;
   position: fixed;
+  z-index: 999;
   top: 0;
   width: 100%;
+  background: var(--body-bg);
+}
+
+header aside {
+  width: 65px;
+  min-width: 65px;
+  background-color: var(--body-bg);
+  position: absolute;
+}
+
+header aside>div {
+  background-color: var(--section-bg);
+  color: var(--primary-text);
+  display: flex;
+  align-items: center;
+}
+
+header aside>div>span {
+  height: 55px;
+  width: 100px !important;
+  background-color: var(--section-bg);
+  display: flex;
+  align-items: center;
+  display: none;
+}
+
+header aside button span {
+  height: 100%;
+  width: min-content;
+  border-bottom: 2px solid var(--muted-text);
+}
+
+header aside button {
+  height: 50px;
+  width: 65px;
+  min-width: 65px;
+  background-color: var(--section-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+header aside button img {
+  height: 40px;
+  width: 40px;
+}
+
+header aside .menubtn {
+  height: 77px;
 }
 
 .navbar {
-  /* max-width: 1160px; */
-  background-color: #ffffff;
+  width: 100%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 32px;
-  /* margin: 0 auto; */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-left: 65px;
+}
+
+.navbar .logo-section svg {
+  background-color: #16a34a;
+  padding: 5px;
+  border-radius: 50%
 }
 
 .logo-section {
@@ -92,14 +153,14 @@ header:first-child {
   border-radius: 6px;
   display: flex;
   align-items: center;
+  gap: 6px;
   cursor: pointer;
-  padding: 8px 16px;
+  padding: 8px 12px;
 }
 
-.btn svg {
+.btn img {
   width: 16px;
   height: 16px;
-  margin-right: 6px;
 }
 
 .btn:hover {
@@ -117,6 +178,26 @@ header:first-child {
   background-color: #6d28d9;
 }
 
+.btn-primary img {
+  background-color: white;
+}
+
+.buttons .themebtn {
+  background-color:  #3b0764;
+  height: 40px;
+  width: 40px;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid black;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.themebtn img {
+  height: 20px;
+  width: 20px;
+}
+
 a {
   color: var(--primary-accent);
   text-decoration: none;
@@ -129,9 +210,9 @@ a:hover {
 /* Header */
 .header {
   width: 100%;
-  background: linear-gradient(90deg, #1e3a8a, #2563eb 40%, #312e81 100%);
+  background: var(--head-section-bg);
   box-shadow: 0 8px 40px rgba(30, 41, 59, 0.18);
-  padding: 2.5rem 0 3.5rem 0;
+  padding: 3.5rem 0 3.5rem 0;
   margin-bottom: 2.5rem;
   animation: fadein 0.5s;
 }
@@ -237,7 +318,7 @@ a:hover {
 }
 
 main>.tabs {
-  background-color: var(--card-bg);
+  background-color: var(--section-bg);
   max-width: 1100px;
   width: 100%;
   display: flex;
@@ -250,8 +331,18 @@ main>.tabs {
 }
 
 main>.tabs button {
+  color: var(--muted-text);
   border: none;
-  background-color: var(--card-bg);
+  background-color: var(--section-bg);
+}
+
+main>.tabs button:active {
+  color: var(--primary-text);
+}
+
+main>.tabs button img {
+  width: 1rem;
+  height: 1rem;
 }
 
 /* Metrics */
@@ -274,22 +365,21 @@ main>.tabs button {
 }
 
 .metric-card {
-  background: var(--card-bg);
+  min-width: 230px;
+  background: var(--section-bg);
   border: 1.5px solid var(--card-border);
   border-radius: var(--card-radius);
   box-shadow: var(--card-shadow);
-  padding: 2.2rem 2rem;
-  font-size: 1.06rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-width: 230px;
+  padding: 1rem;
   transition: box-shadow 0.21s, transform 0.12s;
   animation: fadein 0.54s;
 }
 
 .metric-card:hover {
-  box-shadow: 0 8px 64px rgba(99, 102, 241, .5);
+  box-shadow: 0px 5px 17px rgba(99, 102, 241, .5);
   transform: scale(1.032);
 }
 
@@ -303,7 +393,7 @@ main>.tabs button {
 .metric-icon {
   background: #f1f5f9;
   border-radius: 50%;
-  padding: 0.7rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -335,8 +425,7 @@ main>.tabs button {
 }
 
 .metric-value {
-  font-size: 2rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--primary-accent);
   letter-spacing: -0.03em;
 }
@@ -351,11 +440,11 @@ main>.tabs button {
 }
 
 .metric-trend-up {
-  color: #16a34a;
+  color: #16a34a !important;
 }
 
 .metric-trend-down {
-  color: #dc2626;
+  color: #dc2626 !important;
 }
 
 .metric-desc {
@@ -378,26 +467,25 @@ main>.tabs button {
   }
 }
 
-/* Charts Section */
-.charts {
-  max-width: 1160px;
-  width: 100%;
-  margin: 0 auto 3.5rem auto;
-  padding: 0 2rem;
-}
-
-.charts-card {
-  background: var(--card-bg);
-  border-radius: 1.1rem;
-  box-shadow: var(--card-shadow);
-  padding: 2rem 2.5rem;
-  border: 1.5px solid var(--card-border);
-  margin: 0 auto;
-}
-
 @media (max-width: 700px) {
   .charts-card {
     padding: 1rem;
+  }
+}
+
+.market-chart-section {
+  max-width: calc(100vw - 65px - 450px - 40px - 50px);
+  background-color: var(--section-bg);
+  border: 2px solid black;
+  margin: 20px auto;
+  padding: 30px;
+  border-radius: var(--card-radius);
+  border: 2px solid var(--card-border);
+}
+
+@media (max-width: 1000px) {
+  .market-chart-section {
+    max-width: calc(100vw - 65px - 40px);
   }
 }
 
@@ -461,7 +549,7 @@ main>.tabs button {
   border: none;
   border-radius: 0.6rem;
   background: #eff6ff;
-  color: var(--primary-text);
+  color: var(--muted-text);
   font-weight: 600;
   cursor: pointer;
   transition: background 0.14s, color 0.14s, transform 0.17s;
@@ -480,18 +568,209 @@ main>.tabs button {
   color: #1e40af;
 }
 
-.chart-container {
-  width: 100%;
-  max-width: 700px;
-  min-height: 340px;
-  margin: 0 auto;
+#individual-company-data {
+  width: 100% !important;
+  height: 100% !important;
 }
 
-@media (max-width: 700px) {
-  .chart-container {
-    min-height: 250px;
+.trading-chart-section {
+  height: 70vh !important;
+  min-height: 500px !important;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  border: 2px solid var(--card-border);
+  border-radius: var(--card-radius);
+  margin: 30px 0;
+}
+
+.trading-chart-cont {
+  border: 2px solid var(--muted-text);
+  border-radius: var(--card-radius);
+}
+
+#chart {
+  background-color: var(--section-bg);
+  width: 100% !important;
+  height: 70vh !important;
+}
+
+.trading-chart-cont,
+#chart canvas {
+  width: 100% !important;
+}
+
+#chart div,
+#chart table {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#chart tr:first-child td:first-child {
+  width: 0;
+}
+#chart tr:last-child td {
+  height: fit-content;
+}
+#chart td:last-child {
+  width: 60px;
+}
+
+#company-card-cont {
+  width: 450px;
+  /* height: 100% !important; */
+  background-color: var(--section-bg);
+  border: 2px solid var(--muted-text);
+  margin: 10px;
+  border-radius: 30px;
+}
+
+@media (max-width: 1000px) {
+
+  .trading-chart-cont,
+  #chart,
+  #company-card-cont {
+    max-width: calc(100vw - 65px - 40px) !important;
+  }
+
+  #company-card-list {
+    margin: 0;
   }
 }
+
+
+
+
+
+
+
+#company-card-list {
+  width: 100%;
+  height: calc(70vh - 55px);
+     flex-grow: 1;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+#company-card-list::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+#company-card-list::-webkit-scrollbar-track {
+  background: var(--body-bg);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+#company-card-list::-webkit-scrollbar-thumb {
+  background: #4f8ef7;
+  border-radius: 8px;
+  border: 3px solid #0b1325;
+}
+
+#company-card-list::-webkit-scrollbar-thumb:hover {
+  background: #1e90ff;
+}
+
+#company-card-list::-webkit-scrollbar-corner {
+  background: #0b1325;
+}
+
+#company-card-list .loader {
+  border: 8px solid #e0e0e0;
+  border-top: 8px solid var(--primary-accent);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  align-self: center;
+  justify-self: center;
+}
+
+.company-card {
+  min-width: 230px;
+  background: var(--section-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 10px;
+  font-size: 1.06rem;
+  transition: box-shadow 0.21s, transform 0.12s;
+  animation: fadein 0.54s;
+}
+
+
+.company-card:hover {
+  box-shadow: 0px 5px 17px rgba(99, 102, 241, .5);
+  transform: scale(1.01);
+}
+
+.company-card-header .company-logo {
+  width: 150px;
+}
+
+.company-card-header .company-logo img {
+  background-color: var(--primary-text);
+  border-radius: 50%;
+  max-height: 25px;
+  max-width: 40px;
+  padding: 1px;
+}
+
+.company-name {
+  color: var(--primary-text);
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 10px;
+}
+
+.company-value-cont {
+  display: flex;
+  justify-content: space-between;
+}
+
+.company-stock-price {
+  color: #4f8ef7;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.company-stock-price {
+  color: #4f8ef7;
+}
+
+.company-industry {
+  color: gray;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.details-btn {
+  color: var(--text);
+  background-color: var(--button-bg);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  float: right;
+}
+
+.details-btn a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+
+
+
+
+
 
 /* Footer */
 .footer {
@@ -514,4 +793,26 @@ main>.tabs button {
     opacity: 1;
     transform: none;
   }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.m-l-65 {
+  margin-left: 65px;
+}
+
+.invert {
+  filter: invert(1);
+}
+
+.pointer {
+  cursor: pointer;
 }

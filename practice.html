@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Candlestick Chart</title>
+  <style>
+    body {
+      margin: 0;
+      background: #121826;
+      font-family: sans-serif;
+    }
+    #chart {
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+<div id="chart"></div>
+
+<!-- Lightweight Charts CDN -->
+<script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+<script>    
+  // Create chart
+  const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+    layout: {
+      background: { color: '#121826' },
+      textColor: '#d1d4dc',
+    },
+    grid: {
+      vertLines: { color: '#2B2B43' },
+      horzLines: { color: '#363C4E' },
+    },
+    crosshair: {
+      mode: LightweightCharts.CrosshairMode.Normal,
+    },
+    timeScale: {
+      timeVisible: true,
+      secondsVisible: false,
+    },
+    rightPriceScale: {
+      borderColor: '#485c7b',
+    }
+  });
+
+  const candleSeries = chart.addCandlestickSeries({
+    upColor: '#26a69a',
+    downColor: '#ef5350',
+    wickUpColor: '#26a69a',
+    wickDownColor: '#ef5350',
+    borderVisible: false
+  });
+
+  // Initial static data
+  const initialData = [
+    { time: '2025-06-20', open: 120, high: 130, low: 110, close: 125 },
+    { time: '2025-06-21', open: 125, high: 135, low: 115, close: 118 },
+    { time: '2025-06-22', open: 118, high: 125, low: 105, close: 110 },
+    { time: '2025-06-23', open: 110, high: 120, low: 108, close: 115 },
+    { time: '2025-06-24', open: 115, high: 140, low: 112, close: 138 },
+  ];
+  
+  candleSeries.setData(initialData);
+
+  // Simulate live updates every 3 seconds
+  let lastTime = 2025_06_24;
+  let lastClose = 138;
+
+  setInterval(() => {
+    const nextTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24); // +1 day
+    const open = lastClose;
+    const close = open + (Math.random() * 10 - 5);
+    const high = Math.max(open, close) + Math.random() * 5;
+    const low = Math.min(open, close) - Math.random() * 5;
+    const newBar = {
+      time: Math.floor(nextTime.getTime() / 1000),
+      open: Number(open.toFixed(2)),
+      high: Number(high.toFixed(2)),
+      low: Number(low.toFixed(2)),
+      close: Number(close.toFixed(2)),
+    };
+    candleSeries.update(newBar);
+    lastClose = newBar.close;
+  }, 3000);
+</script>
+
+</body>
+</html>

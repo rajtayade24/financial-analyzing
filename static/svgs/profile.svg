@@ -1,0 +1,10 @@
+<svg viewBox="0 0 24 24" width="100" height="100" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Outer Circle (Border) - thinner stroke -->
+  <circle cx="12" cy="12" r="10" stroke-width="1.5" />
+  
+  <!-- Head - thinner stroke -->
+  <circle cx="12" cy="8" r="4" stroke-width="1.5" />
+  
+  <!-- Shoulders/Body - same thinner stroke -->
+  <path d="M4 20c0-4.5 5-7 8-7s8 2.5 8 7" stroke-width="1.5" />
+</svg>
