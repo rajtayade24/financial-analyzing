@@ -39,11 +39,11 @@ document.querySelector(".buttons .themebtn").addEventListener("click", function 
 
 const marketChart = document.querySelector(".market-chart-section")
 const tradingChart = document.querySelector(".trading-chart-section")
-document.getElementById("tradingbtn").addEventListener("click", ()=> {
-    tradingChart.style.display = "flex" 
+document.getElementById("tradingbtn").addEventListener("click", () => {
+    tradingChart.style.display = "flex"
     marketChart.style.display = "none"
 })
-document.getElementById("chartbtn").addEventListener("click", ()=> {
+document.getElementById("chartbtn").addEventListener("click", () => {
     marketChart.style.display = "block"
     tradingChart.style.display = "none"
 })
@@ -163,7 +163,6 @@ async function drawLineChart() {
     })
 }
 
-
 // Render bar chart (Revenue & Expenses over months)
 async function drawBarChart() {
     resetChart(chartInstance);
@@ -262,68 +261,6 @@ document.getElementById("lineChartBtn").addEventListener("click", function () {
 });
 drawBarChart();
 
-async function showCompantList() {
-    const response = await fetch("/stock-data");
-    const data = await response.json(); // now it's an array
-
-    const companyCardList = document.getElementById("company-card-list");
-    companyCardList.innerHTML = "";
-
-    let totalRevenue = 0;
-    let totalProfit = 0;
-    let totalChange = 0;
-    let companyLength = 0
-    data.forEach(company => {
-        totalRevenue += company.revenue;
-        totalProfit += company.profit;
-        totalChange += company.change_percent;
-        companyLength++;
-
-        let companyTrendRateIcon = company.change_percent > 0 ? "trand-increase.svg" : "trend-decrease.svg";
-        let companyTrendRateColorClass = company.change_percent > 0 ? "metric-trend-up" : "metric-trend-dawn";
-        companyCardList.innerHTML += `                                        
-        <li class="company-card">
-        <div class="company-card-header">
-        <span class="company-logo"><img src="/static/logo/${company.symbol}.png" alt="company-logo"></span>
-        <span class="company-name">${company.name}</span>
-        </div>
-        <div class="company-value-cont">
-        <div class="left">
-        <div class="company-stock-price">$${inrToUsd(company.price)}</div>
-          <span class="company-industry">${company.industry}</span>
-          </div>
-          <div class="right">
-          <div class="company-trend ${companyTrendRateColorClass}">
-          <img src="/static/svgs/${companyTrendRateIcon}" alt="metric-trend">
-          <span class="trend-rate">${company.change_percent}</span>
-          </div>
-          <button class="details-btn"><a href="company1_reliance_industry.html">Details ></a></button>
-          </div>
-          </div>
-          </li>`;
-          
-        });
-        
-        const trendValues = document.getElementsByClassName("metric-value-row")
-        trendValues.innerHTML = ""
-        
-        let averageRevenue = (inrToUsd(totalRevenue) / companyLength).toFixed(2)
-        let averageProfit = (inrToUsd(totalProfit) /companyLength).toFixed(2)
-        let averageChange = (totalChange / companyLength).toFixed(2)
-        
-        let companyAverageTrendRateIcon = averageChange > 0 ? "trand-increase.svg" : "trend-decrease.svg";
-        let companyAverageTrendRateColorClass = averageChange > 0 ? "metric-trend-up" : "metric-trend-dawn";
-
-    trendValues[0].innerHTML = `
-    <span class="metric-value">$${averageRevenue}</span>
-    <span class="metric-trend ${companyAverageTrendRateColorClass}"><img src="/static/svgs/${companyAverageTrendRateIcon}" />${averageChange}%</span>`
-    trendValues[1].innerHTML = `?`
-
-    trendValues[2].innerHTML = `
-    <span class="metric-value">$${averageProfit}</span>
-    <span class="metric-trend ${companyAverageTrendRateColorClass}"><img src="/static/svgs/${companyAverageTrendRateIcon}" />${averageChange}%</span>`
-}
-showCompantList()
 
 async function getTradingData() {
     let response = fetch("/static/json/stock_data_append.json")
@@ -332,8 +269,15 @@ async function getTradingData() {
 
     return companyData;
 }
-async function showTradingChart() {
-    const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+let chart;
+async function showTradingChart(companyName) {
+    console.log(companyName);
+
+    if (chart) {
+        const chartContainer = document.getElementById('chart');
+        chartContainer.innerHTML = ''; // Remove previous chart's canvas
+    }
+    chart = LightweightCharts.createChart(document.getElementById('chart'), {
         layout: {
             background: "var(--section-bg)",
             textColor: '#d1d4dc',
@@ -363,30 +307,46 @@ async function showTradingChart() {
     });
 
     const all_datas = await getTradingData()
-    const companyName = "Reliance Industries"
     const initialData = []
     const timestamps = Object.keys(all_datas)
 
+    let times = []
+    let prices = []
+    let closes = []
+  
     timestamps.forEach((t, i) => {
         console.log(t)
-        let data = all_datas[t]
+        let data = all_datas[t];
         const company = data.find(c => c.name === companyName)
 
-        initialData.push({
-            time: Math.floor(t.trim()),
-            open: company.price,
-            close: company.previous_close,
-            high: company.high,
-            low: company.low
-        });
-
+        times.push(parseInt(t.trim()))
+        prices.push(company.price)
+    
+        // initialData.push({
+        //     time: Math.floor(t.trim()),
+        //     open: company.price,
+        //     close: company.previous_close,
+        //     high: company.high,
+        //     low: company.low
+        // });
     })
+    console.log(times.length)
+    for (let i = 0; i < times.length - 1; i++) {
+        initialData.push({
+            time: times[i + 1],
+            open: prices[i+1],
+            close: prices[i],
+            high: prices[i+1] + 1,
+            low: prices[i+1] - 1
+        });
+    }
     console.log(initialData)
     candleSeries.setData(initialData);
 
+    let lastClose = prices[prices.length - 1]
     setInterval(() => {
         const nextTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24); // +1 day
-        const open = 1400;
+        const open = lastClose;
         const close = open + (Math.random() * 10 - 5);
         const high = Math.max(open, close) + Math.random() * 5;
         const low = Math.min(open, close) - Math.random() * 5;
@@ -400,8 +360,78 @@ async function showTradingChart() {
         console.log(newBar);
 
         candleSeries.update(newBar);
-        lastClose = newBar.close;
+        lastClose = close;
     }, 3000);
 
 }
-showTradingChart()
+showTradingChart("Reliance Industries")
+
+async function showCompantList() {
+    const response = await fetch("/stock-data");
+    const data = await response.json(); // now it's an array
+
+    const companyCardList = document.getElementById("company-card-list");
+    companyCardList.innerHTML = "";
+
+    let totalRevenue = 0;
+    let totalProfit = 0;
+    let totalChange = 0;
+    let companyLength = 0
+
+    data.forEach(company => {
+        totalRevenue += company.revenue;
+        totalProfit += company.profit;
+        totalChange += company.change_percent;
+        companyLength++;
+
+        let companyTrendRateIcon = company.change_percent > 0 ? "trand-increase.svg" : "trend-decrease.svg";
+        let companyTrendRateColorClass = company.change_percent > 0 ? "metric-trend-up" : "metric-trend-dawn";
+        companyCardList.innerHTML += `                                        
+        <li class="company-card">
+            <div class="company-card-header">
+                <span class="company-logo"><img src="/static/logo/${company.symbol}.png" alt="company-logo"></span>
+                <span class="company-name">${company.name}</span>
+            </div>
+            <div class="company-value-cont">
+                <div class="left">
+                    <div class="company-stock-price">$${inrToUsd(company.price)}</div>
+                    <span class="company-industry">${company.industry}</span>
+                </div>
+                <div class="right">
+                    <div class="company-trend ${companyTrendRateColorClass}">
+                        <img src="/static/svgs/${companyTrendRateIcon}" alt="metric-trend">
+                        <span class="trend-rate ${companyTrendRateColorClass}">${company.change_percent}</span>
+                    </div>
+                    <button class="details-btn">Details</button>
+                </div>
+            </div>
+        </li>`;
+    });
+
+    const trendValues = document.getElementsByClassName("metric-value-row")
+    trendValues.innerHTML = ""
+
+    let averageRevenue = (inrToUsd(totalRevenue) / companyLength).toFixed(2)
+    let averageProfit = (inrToUsd(totalProfit) / companyLength).toFixed(2)
+    let averageChange = (totalChange / companyLength).toFixed(2)
+
+    let companyAverageTrendRateIcon = averageChange > 0 ? "trand-increase.svg" : "trend-decrease.svg";
+    let companyAverageTrendRateColorClass = averageChange > 0 ? "metric-trend-up" : "metric-trend-dawn";
+
+    trendValues[0].innerHTML = `
+        <span class="metric-value">$${averageRevenue}</span>
+        <span class="metric-trend ${companyAverageTrendRateColorClass}"><img src="/static/svgs/${companyAverageTrendRateIcon}" />${averageChange}%</span>`
+    trendValues[1].innerHTML = `
+       ?`
+    trendValues[2].innerHTML = `
+        <span class="metric-value">$${averageProfit}</span>
+        <span class="metric-trend ${companyAverageTrendRateColorClass}"><img src="/static/svgs/${companyAverageTrendRateIcon}" />${averageChange}%</span>`
+
+    const companiesNames = document.querySelectorAll(".company-name");
+    document.querySelectorAll(".details-btn").forEach((el, i) => {
+        el.addEventListener("click", (e) => {
+            showTradingChart(companiesNames[i].innerHTML)
+        })
+    })
+}
+showCompantList()
