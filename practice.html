@@ -1,88 +1,261 @@
-<!DOCTYPE html>
-<html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+
 <head>
-  <title>Live Candlestick Chart</title>
+  <meta charset="UTF-8" />
+  <title>Stock Chart with Tooltip</title>
   <style>
     body {
+      background-color: #0B1325;
+      font-family: monospace;
+      color: white;
       margin: 0;
-      background: #121826;
-      font-family: sans-serif;
+      padding: 20px;
     }
+
+    .container {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
     #chart {
-      width: 100%;
-      height: 100vh;
+      width: 900px;
+      height: 450px;
+    }
+
+    #tooltip {
+      background-color: #111827;
+      padding: 12px 16px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px #000;
+      min-width: 140px;
+    }
+
+    #tooltip div {
+      margin-bottom: 6px;
+    }
+
+    #tooltip span {
+      float: right;
+    }
+  </style>
+  <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+    <div id="chart"></div>
+    <div id="tooltip">
+      <div>Time: <span>--</span></div>
+      <div>Open: <span>$--</span></div>
+      <div>High: <span>$--</span></div>
+      <div>Low: <span>$--</span></div>
+      <div>Close: <span>$--</span></div>
+      <div>Volume: <span>--</span></div>
+    </div>
+  </div>
+
+  <script>
+    const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+      layout: {
+        background: { color: '#0B1325' },
+        textColor: '#d1d4dc',
+      },
+      grid: {
+        vertLines: { color: '#2B2B43' },
+        horzLines: { color: '#363C4E' },
+      },
+      crosshair: {
+        mode: LightweightCharts.CrosshairMode.Normal,
+      },
+      timeScale: {
+        timeVisible: true,
+        secondsVisible: false,
+      },
+    });
+
+    const candleSeries = chart.addCandlestickSeries({
+      upColor: '#26a69a',
+      downColor: '#ef5350',
+      wickUpColor: '#26a69a',
+      wickDownColor: '#ef5350',
+      borderVisible: false,
+    });
+
+    // Sample data
+    const sampleData = [
+      { time: 1719723000, open: 172.84, high: 174.16, low: 172.84, close: 173.36, volume: 1179526 },
+      { time: 1719726600, open: 172.08, high: 174.06, low: 170.81, close: 173.76, volume: 779345 },
+      { time: 1719730200, open: 173.00, high: 175.12, low: 172.32, close: 174.00, volume: 985000 },
+      { time: 1719733800, open: 174.20, high: 175.90, low: 173.80, close: 175.50, volume: 1048320 },
+      { time: 1719737400, open: 175.60, high: 176.40, low: 174.90, close: 175.20, volume: 894512 },
+    ];
+
+    candleSeries.setData(sampleData);
+
+    const tooltip = document.getElementById('tooltip');
+    const [timeEl, openEl, highEl, lowEl, closeEl, volumeEl] = tooltip.querySelectorAll("span");
+
+    chart.subscribeCrosshairMove(param => {
+      if (!param || !param.time || !param.seriesData.has(candleSeries)) {
+        timeEl.textContent = openEl.textContent = highEl.textContent = lowEl.textContent = closeEl.textContent = volumeEl.textContent = "--";
+        return;
+      }
+
+      const data = param.seriesData.get(candleSeries);
+      const time = new Date(param.time * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+
+      timeEl.textContent = time;
+      openEl.textContent = `$${data.open.toFixed(2)}`;
+      highEl.textContent = `$${data.high.toFixed(2)}`;
+      lowEl.textContent = `$${data.low.toFixed(2)}`;
+      closeEl.textContent = `$${data.close.toFixed(2)}`;
+      volumeEl.textContent = data.volume.toLocaleString();
+      
+      tooltip.style.left = rect.left + window.scrollX + param.point.x + 20 + 'px';
+      tooltip.style.top = rect.top + window.scrollY + param.point.y + 20 + 'px';
+    });
+
+    tooltip.style.position = 'absolute';
+    tooltip.style.zIndex = '10';
+
+  </script>
+
+</body>
+
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>UNIX Timestamp in Seconds</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #timestamp {
+      font-size: 2em;
+      color: #333;
     }
   </style>
 </head>
 <body>
 
-<div id="chart"></div>
+  <h1>Current UNIX Timestamp (in seconds)</h1>
+  <div id="timestamp">Loading...</div>
 
-<!-- Lightweight Charts CDN -->
-<script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
-<script>    
-  // Create chart
-  const chart = LightweightCharts.createChart(document.getElementById('chart'), {
-    layout: {
-      background: { color: '#121826' },
-      textColor: '#d1d4dc',
-    },
-    grid: {
-      vertLines: { color: '#2B2B43' },
-      horzLines: { color: '#363C4E' },
-    },
-    crosshair: {
-      mode: LightweightCharts.CrosshairMode.Normal,
-    },
-    timeScale: {
-      timeVisible: true,
-      secondsVisible: false,
-    },
-    rightPriceScale: {
-      borderColor: '#485c7b',
+  <script>
+    function updateUnixTimestamp() {
+      const unixTimestampInSeconds = Math.floor(Date.now() / 1000);
+      document.getElementById("timestamp").textContent = unixTimestampInSeconds;
     }
-  });
 
-  const candleSeries = chart.addCandlestickSeries({
-    upColor: '#26a69a',
-    downColor: '#ef5350',
-    wickUpColor: '#26a69a',
-    wickDownColor: '#ef5350',
-    borderVisible: false
-  });
+    // Initial call
+    updateUnixTimestamp();
 
-  // Initial static data
-  const initialData = [
-    { time: '2025-06-20', open: 120, high: 130, low: 110, close: 125 },
-    { time: '2025-06-21', open: 125, high: 135, low: 115, close: 118 },
-    { time: '2025-06-22', open: 118, high: 125, low: 105, close: 110 },
-    { time: '2025-06-23', open: 110, high: 120, low: 108, close: 115 },
-    { time: '2025-06-24', open: 115, high: 140, low: 112, close: 138 },
-  ];
-  
-  candleSeries.setData(initialData);
+    // Update every second
+    setInterval(updateUnixTimestamp, 1000);
+  </script>
 
-  // Simulate live updates every 3 seconds
-  let lastTime = 2025_06_24;
-  let lastClose = 138;
+</body>
+</html> -->
 
-  setInterval(() => {
-    const nextTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24); // +1 day
-    const open = lastClose;
-    const close = open + (Math.random() * 10 - 5);
-    const high = Math.max(open, close) + Math.random() * 5;
-    const low = Math.min(open, close) - Math.random() * 5;
-    const newBar = {
-      time: Math.floor(nextTime.getTime() / 1000),
-      open: Number(open.toFixed(2)),
-      high: Number(high.toFixed(2)),
-      low: Number(low.toFixed(2)),
-      close: Number(close.toFixed(2)),
-    };
-    candleSeries.update(newBar);
-    lastClose = newBar.close;
-  }, 3000);
-</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu Button Span Expand</title>
+  <style>
+    body {
+      background: #1a1a2e;
+      font-family: Arial, sans-serif;
+      color: white;
+      padding: 20px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 200px;
+    }
+
+    .submenubtn-cont {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #16213e;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .submenubtn-cont:hover {
+      background: #0f3460;
+    }
+
+    .submenu-label {
+      display: inline-block;
+      width: 0;
+      opacity: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      transition: width 0.3s ease, opacity 0.3s ease;
+    }
+
+    .submenubtn-cont.active .submenu-label {
+      width: 120px;
+      opacity: 1;
+    }
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Menu Buttons</h2>
+  <div class="menu">
+    <div class="submenubtn-cont">
+      <div class="icon">gggg</div>
+      <span class="submenu-label">Profile</span>
+    </div>
+    <div class="submenubtn-cont">
+      <div class="icon">gggg</div>
+      <span class="submenu-label">Trading</span>
+    </div>
+    <div class="submenubtn-cont">
+      <div class="icon">gggg</div>
+      <span class="submenu-label">Chart Station</span>
+    </div>
+    <div class="submenubtn-cont">
+      <div class="icon">gggg</div>
+      <span class="submenu-label">News</span>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.submenubtn-cont').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const isActive = btn.classList.contains('active');
+        document.querySelectorAll('.submenubtn-cont').forEach(el => el.classList.remove('active'));
+        if (!isActive) {
+          btn.classList.add('active');
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>

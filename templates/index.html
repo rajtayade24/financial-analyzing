@@ -93,8 +93,7 @@
             </div>
             <div>
               <div class="metric-value-row">
-                <span class="metric-value">$312,400</span>
-                <span class="metric-trend metric-trend-up"><img src="/static/svgs/trand-increase.svg" alt="metric-icon" />+7.2%</span>
+                <div class="loader"></div>
               </div>
               <div class="metric-desc">This quarter</div>
             </div>
@@ -109,8 +108,7 @@
             </div>
             <div>
               <div class="metric-value-row">
-                <span class="metric-value">$108,300</span>
-                <span class="metric-trend metric-trend-down"><img src="/static/svgs/trend-decrease.svg" alt="metric-trend" />-2.1%</span>
+                <div class="loader"></div>
               </div>
               <div class="metric-desc">This quarter</div>
             </div>
@@ -125,8 +123,7 @@
             </div>
             <div>
               <div class="metric-value-row">
-                <span class="metric-value">$204,100</span>
-                <span class="metric-trend metric-trend-up"><img src="/static/svgs/trand-increase.svg" />+11.6%</span>
+                <div class="loader"></div>
               </div>
               <div class="metric-desc">Gross Margin</div>
             </div>
@@ -134,7 +131,6 @@
         </div>
       </section>
 
-      
       <section class="market-chart-section">
         <div class="charts-header">
           <h2>Financial Data Overview</h2>
@@ -151,18 +147,39 @@
         </div>
         <canvas id="individual-company-data" width="500" height="300"></canvas>
       </section>
-      
+
       <section class="trading-chart-section">
         <div class="trading-chart-cont">
+          <div class="panel">
+            <!-- Stock Title -->
+            <div class="stock-title">
+              <span id="symbol">RI</span> -
+              <span id="companyName">Reliance Industries</span>
+            </div>
+
+            <!-- Ticker Buttons -->
+            <div class="tickers" id="tickers">
+              <div class="loader"></div>
+            </div>
+
+            <!-- Time Intervals -->
+            <div class="button-group" id="intervals">
+              <button class="activebtn">1H</button>
+              <button>4H</button>
+              <button>1D</button>
+              <button>1W</button>
+              <button>1M</button>
+            </div>
+          </div>
           <div id="chart" class="trading-chart"></div>
         </div>
-        
+
         <div id="company-card-cont">
           <h1>Nifty 50 Companies List 2025 : Top 50 Stocks in India</h1>
           <ul id="company-card-list">
             <li class="company-card">
               <div class="company-card-header">
-                <span class="company-logo"><img src="/static/logos/RELIANCE.NS.png" alt="company-logo" /></span>
+                <span class="company-logo"><img src="/static/logo/RELIANCE.NS.png" alt="company-logo" /></span>
                 <span class="company-name">Reliance Industries</span>
               </div>
               <div class="company-value-cont">
@@ -183,7 +200,7 @@
           </ul>
         </div>
       </section>
-      
+
       <nav class="tabs">
         <button class="tab">
           <img src="/static/svgs/tab1.svg" alt="tab" />
@@ -197,18 +214,19 @@
           <img src="/static/svgs/tab3.svg" alt="tab" />
           Expense Analyzer
         </button>
-        <img src="/static/svgs/tab4.svg" alt="tab" />
-        <button class="tab">Goal Tracker</button>
+        <button class="tab">
+          <img src="/static/svgs/tab4.svg" alt="tab" />
+          Goal Tracker
+        </button>
       </nav>
     </main>
-    
-    
+
     <!-- Footer -->
     <footer class="footer">
       &copy; <span id="currentYear"></span> Financial Analyzer. All rights reserved.
     </footer>
-    
+
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
     <!-- <script src="{{ url_for('static', filename='js/company_data.js') }}"></script> -->
   </body>
-  </html>
+</html>

@@ -183,7 +183,7 @@ header aside .menubtn {
 }
 
 .buttons .themebtn {
-  background-color:  #3b0764;
+  background-color: #3b0764;
   height: 40px;
   width: 40px;
   justify-content: center;
@@ -213,7 +213,7 @@ a:hover {
   background: var(--head-section-bg);
   box-shadow: 0 8px 40px rgba(30, 41, 59, 0.18);
   padding: 3.5rem 0 3.5rem 0;
-  margin-bottom: 2.5rem;
+  margin: 2.5rem 0;
   animation: fadein 0.5s;
 }
 
@@ -439,14 +439,6 @@ main>.tabs button img {
   margin-left: 0.7rem;
 }
 
-.metric-trend-up {
-  color: #16a34a !important;
-}
-
-.metric-trend-down {
-  color: #dc2626 !important;
-}
-
 .metric-desc {
   color: var(--muted-text);
   font-size: 1rem;
@@ -474,6 +466,7 @@ main>.tabs button img {
 }
 
 .market-chart-section {
+  min-height: 650px;
   max-width: calc(100vw - 65px - 450px - 40px - 50px);
   background-color: var(--section-bg);
   border: 2px solid black;
@@ -574,63 +567,61 @@ main>.tabs button img {
 }
 
 .trading-chart-section {
-  height: 70vh !important;
   min-height: 500px !important;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-direction: row;
+  flex-wrap: wrap;
   border: 2px solid var(--card-border);
   border-radius: var(--card-radius);
   margin: 30px 0;
 }
 
 .trading-chart-cont {
+  height: 70vh !important;
+  width: 100%;
+  max-width: 950PX;
   border: 2px solid var(--muted-text);
   border-radius: var(--card-radius);
 }
 
 #chart {
   background-color: var(--section-bg);
-  width: 100% !important;
-  height: 70vh !important;
-}
-
-.trading-chart-cont,
-#chart canvas {
-  width: 100% !important;
-}
-
-#chart div,
-#chart table {
-  width: 100% !important;
-  height: 100% !important;
 }
 
 #chart tr:first-child td:first-child {
   width: 0;
 }
+
 #chart tr:last-child td {
   height: fit-content;
 }
+
 #chart td:last-child {
   width: 60px;
 }
 
+.company-card-section h1 {
+  margin: 1rem;
+}
+
 #company-card-cont {
   width: 450px;
-  /* height: 100% !important; */
+  min-width: 450px;
   background-color: var(--section-bg);
   border: 2px solid var(--muted-text);
   margin: 10px;
   border-radius: 30px;
 }
 
-@media (max-width: 1000px) {
+#company-card-cont h1 {
+  margin: 1rem;
+}
 
-  .trading-chart-cont,
-  #chart,
+@media (max-width: 1450px) {
   #company-card-cont {
-    max-width: calc(100vw - 65px - 40px) !important;
+    width: 100%;
   }
 
   #company-card-list {
@@ -638,7 +629,78 @@ main>.tabs button img {
   }
 }
 
+.panel {
+  width: 100%;
+  background-color: var(--section-bg);
+  color: var(--primary-text);
+  border: 1px solid #444;
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 1rem;
+}
 
+.panel>div {
+  margin: 0 50px;
+}
+
+.stock-title span {
+  margin: 0 5px;
+}
+
+.tickers {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tickers button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: var(--section-bg);
+  color: var(--primary-text);
+  border: 1px solid var(mut);
+  transition: background 0.2s;
+}
+
+.tickers button:hover {
+  background-color: #222;
+}
+
+.tickers button.activebtn {
+  background-color: #22c55e;
+  color: black;
+  border-color: #22c55e;
+  font-weight: bold;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.button-group button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--section-bg);
+  color: var(--primary-text);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button-group button:hover {
+  background-color: #333;
+}
+
+.button-group button.activebtn {
+  background-color: #22c55e;
+  color: black;
+  font-weight: bold;
+}
 
 
 
@@ -647,7 +709,7 @@ main>.tabs button img {
 #company-card-list {
   width: 100%;
   height: calc(70vh - 55px);
-     flex-grow: 1;
+  flex-grow: 1;
   list-style-type: none;
   display: grid;
   grid-template-columns: 1fr;
@@ -681,15 +743,20 @@ main>.tabs button img {
   background: #0b1325;
 }
 
-#company-card-list .loader {
+.loader {
+  height: 30px;
+  width: 30px;
   border: 8px solid #e0e0e0;
   border-top: 8px solid var(--primary-accent);
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
   animation: spin 1s linear infinite;
   align-self: center;
   justify-self: center;
+}
+
+#company-card-list .loader {
+  width: 60px;
+  height: 60px;
 }
 
 .company-card {
@@ -756,7 +823,7 @@ main>.tabs button img {
   background-color: var(--button-bg);
   border: none;
   border-radius: 5px;
-  padding: 10px;
+  padding: 5px 10px;
   margin-top: 10px;
   float: right;
 }
@@ -815,4 +882,12 @@ main>.tabs button img {
 
 .pointer {
   cursor: pointer;
+}
+
+.metric-trend-up {
+  color: #16a34a !important;
+}
+
+.metric-trend-down {
+  color: #dc2626 !important;
 }

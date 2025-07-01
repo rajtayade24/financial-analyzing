@@ -15,6 +15,12 @@ function setTheme() {
         root.setProperty('--card-shadow', '1px 4px 20px 9px rgba(30, 41, 59, 0.08)');
         root.setProperty('--button-bg', '#4f8ef7');
         root.setProperty('--muted-text', '#64748b');
+        chart.applyOptions({
+            layout: {
+                background: { color: 'white' },
+                textColor: "black"
+            }
+        });
     } else {
         root.setProperty('--primary-text', 'white');
         root.setProperty('--primary-accent', '#4f8ef7');
@@ -26,6 +32,12 @@ function setTheme() {
         root.setProperty('--card-shadow', '1px 4px 20px 9px rgba(30, 41, 59, 0.08)');
         root.setProperty('--button-bg', '#4f8ef7');
         root.setProperty('--muted-text', '#64748b');
+        chart.applyOptions({
+            layout: {
+                background: { color: '#0B1325' },
+                textColor: '#d1d4dc',
+            }
+        });
     }
 }
 
@@ -60,29 +72,8 @@ function handleResize() {
         });
     }
 }
-// Run it once on page load
 handleResize();
-// Also run it on window resize
 window.addEventListener("resize", handleResize);
-window.addEventListener("resize", () => {
-    document.getElementById('chart')?.style.setProperty('width', '100%', 'important');
-    document.querySelector('.trading-chart-cont')?.style.setProperty('width', '100%', 'important');
-    document.querySelector('#chart div')?.style.setProperty('width', '100%', 'important');
-    document.querySelector('#chart table')?.style.setProperty('width', '100%');
-    document.querySelectorAll('#chart tr')[0]?.querySelectorAll('canvas')?.forEach(el => {
-        el.style.setProperty('width', '100%', 'important');
-        el.style.setProperty('height', '100%', 'important');
-    });
-    document.querySelectorAll('#chart tr')[1]?.querySelectorAll('canvas')?.forEach(el => {
-        el.style.setProperty('width', '60px', 'important');
-        el.style.setProperty('height', '100%', 'important');
-    });
-
-
-    let trs = document.querySelectorAll("#chart tr");
-    let secondRowHeight = trs[1].offsetHeight;
-    trs[0].style.height = `calc(100% - ${secondRowHeight + 20}px)`;
-});
 
 
 const submenubtnContent = document.querySelectorAll("header aside > div > span")
@@ -98,7 +89,6 @@ document.querySelectorAll("header aside .submenubtn-cont").forEach((el, i) => {
     })
 })
 
-// CHARTs
 function inrToUsd(inrAmount, exchangeRate = 83.20) {
     if (inrAmount < 0) {
         throw new Error("Amount cannot be negative.");
@@ -107,17 +97,18 @@ function inrToUsd(inrAmount, exchangeRate = 83.20) {
     return usdAmount.toFixed(2); // returns a string with 2 decimal places
 }
 
-// Helper to destroy old chart2.
 function resetChart(chartInstance) {
     if (chartInstance) {
         chartInstance.destroy();
     }
 }
 
-async function getCompanyData() {
-    let response = fetch("/static/json/stock_data.json")
-    let companyData = (await response).json()
-    return companyData;
+async function fetchData() {
+    console.log("fetching...")
+    const res = await fetch("http://127.0.0.1:5000/stock-data");
+    const data = await res.json();
+    console.log("Fetched data:", data);
+    return data;
 }
 
 let chartInstance = null;
@@ -125,7 +116,7 @@ const ctx = document.getElementById("individual-company-data").getContext("2d")
 
 async function drawLineChart() {
     resetChart(chartInstance);
-    let company_data = await getCompanyData();
+    let company_data = await fetchData();
 
     chartInstance = new Chart(ctx, {
         type: "line",
@@ -166,7 +157,7 @@ async function drawLineChart() {
 // Render bar chart (Revenue & Expenses over months)
 async function drawBarChart() {
     resetChart(chartInstance);
-    let company_data = await getCompanyData()
+    let company_data = await fetchData()
 
     chartInstance = new Chart(ctx, {
         type: "bar",
@@ -217,7 +208,7 @@ async function drawBarChart() {
 // Render pie chart (Revenue vs Expenses vs Profit)
 async function drawPieChart() {
     resetChart(chartInstance);
-    let company_data = await getCompanyData();
+    let company_data = await fetchData();
 
     chartInstance = new Chart(ctx, {
         type: "pie",
@@ -261,25 +252,56 @@ document.getElementById("lineChartBtn").addEventListener("click", function () {
 });
 drawBarChart();
 
-
-async function getTradingData() {
-    let response = fetch("/static/json/stock_data_append.json")
-    let companyData = (await response).json()
-    console.log(companyData);
-
-    return companyData;
+const chartContainer = document.getElementById('chart');
+function setChartHeight() {
+    const panelHeight = getComputedStyle(document.querySelector(".panel")).height || "0px";
+    chartContainer.style.height = `calc(100% - ${panelHeight} - 20px)`;
+    chartContainer.style.width = `100%`;
 }
+setChartHeight()
+// Resize chart on window resize
+window.addEventListener('resize', () => {
+    setChartHeight();
+    chart.resize(chartContainer.clientWidth, chartContainer.clientHeight);
+});
+
+async function getNextBar(candleSeries, companyName, lastClose, timeStamp, timeChangeFactor) {
+    const all = await fetchData();
+    const company = all.find(c => c.name === companyName);
+    console.log(company)
+    
+    console.log(timeStamp, lastClose, company.price)
+
+    let nextBar = {
+        time: timeStamp,
+        open: lastClose,
+        close: company.price,
+        high: company.price + 5,
+        low: lastClose - 5
+    };
+    timeStamp += timeChangeFactor;
+    
+    candleSeries.update(nextBar);
+    
+    lastClose = nextBar.close;
+    setTimeout(async () => {
+        await getNextBar(candleSeries, companyName, lastClose, timeStamp, timeChangeFactor)
+    }, timeChangeFactor * 1000);
+}
+
 let chart;
 async function showTradingChart(companyName) {
     console.log(companyName);
 
+    const chartContainer = document.getElementById('chart');
     if (chart) {
-        const chartContainer = document.getElementById('chart');
         chartContainer.innerHTML = ''; // Remove previous chart's canvas
     }
     chart = LightweightCharts.createChart(document.getElementById('chart'), {
+        width: chartContainer.clientWidth,
+        height: chartContainer.clientHeight,
         layout: {
-            background: "var(--section-bg)",
+            background: { color: '#0B1325' },
             textColor: '#d1d4dc',
         },
         grid: {
@@ -291,7 +313,7 @@ async function showTradingChart(companyName) {
         },
         timeScale: {
             timeVisible: true,
-            secondsVisible: false,
+            secondsVisible: true,
         },
         rightPriceScale: {
             borderColor: '#485c7b',
@@ -306,72 +328,47 @@ async function showTradingChart(companyName) {
         borderVisible: false
     });
 
-    const all_datas = await getTradingData()
-    const initialData = []
-    const timestamps = Object.keys(all_datas)
+    // initial bar
+    const all = await fetchData();
+    const company = all.find(c => c.name === companyName);
+    console.log(company)
 
-    let times = []
-    let prices = []
-    let closes = []
-  
-    timestamps.forEach((t, i) => {
-        console.log(t)
-        let data = all_datas[t];
-        const company = data.find(c => c.name === companyName)
+    let timeStamp = Math.floor(Date.now() / 1000)
 
-        times.push(parseInt(t.trim()))
-        prices.push(company.price)
-    
-        // initialData.push({
-        //     time: Math.floor(t.trim()),
-        //     open: company.price,
-        //     close: company.previous_close,
-        //     high: company.high,
-        //     low: company.low
-        // });
-    })
-    console.log(times.length)
-    for (let i = 0; i < times.length - 1; i++) {
-        initialData.push({
-            time: times[i + 1],
-            open: prices[i+1],
-            close: prices[i],
-            high: prices[i+1] + 1,
-            low: prices[i+1] - 1
-        });
-    }
-    console.log(initialData)
-    candleSeries.setData(initialData);
+    const initialBar = {
+        time: timeStamp,
+        open: company.close,
+        close: company.price,
+        high: company.high,
+        low: company.low,
+    };
+    let lastClose = initialBar.close;
+    candleSeries.setData([initialBar]);
 
-    let lastClose = prices[prices.length - 1]
-    setInterval(() => {
-        const nextTime = new Date(new Date().getTime() + 1000 * 60 * 60 * 24); // +1 day
-        const open = lastClose;
-        const close = open + (Math.random() * 10 - 5);
-        const high = Math.max(open, close) + Math.random() * 5;
-        const low = Math.min(open, close) - Math.random() * 5;
-        const newBar = {
-            time: Math.floor(nextTime.getTime() / 1000),
-            open: Number(open.toFixed(2)),
-            high: Number(high.toFixed(2)),
-            low: Number(low.toFixed(2)),
-            close: Number(close.toFixed(2)),
-        };
-        console.log(newBar);
-
-        candleSeries.update(newBar);
-        lastClose = close;
-    }, 3000);
-
+    let timeChangeFactor = 5;
+    await getNextBar(candleSeries, companyName, lastClose, timeStamp, timeChangeFactor)
 }
 showTradingChart("Reliance Industries")
 
+function getShortForm(companyName) {
+    const shortForm = companyName
+        .split(" ")
+        .map(word => word[0])   // Take the first letter of each word
+        .join("")
+        .toUpperCase();
+    if (shortForm.length < 2) {
+        return companyName.slice(0, 3);
+    } else {
+        return shortForm.replace("(", "");
+    }
+}
 async function showCompantList() {
-    const response = await fetch("/stock-data");
-    const data = await response.json(); // now it's an array
+    const data = await fetchData()
 
     const companyCardList = document.getElementById("company-card-list");
     companyCardList.innerHTML = "";
+    const tickers = document.getElementById("tickers")
+    tickers.innerHTML = ""
 
     let totalRevenue = 0;
     let totalProfit = 0;
@@ -386,13 +383,14 @@ async function showCompantList() {
 
         let companyTrendRateIcon = company.change_percent > 0 ? "trand-increase.svg" : "trend-decrease.svg";
         let companyTrendRateColorClass = company.change_percent > 0 ? "metric-trend-up" : "metric-trend-dawn";
+
         companyCardList.innerHTML += `                                        
         <li class="company-card">
             <div class="company-card-header">
                 <span class="company-logo"><img src="/static/logo/${company.symbol}.png" alt="company-logo"></span>
                 <span class="company-name">${company.name}</span>
-            </div>
-            <div class="company-value-cont">
+                </div>
+                <div class="company-value-cont">
                 <div class="left">
                     <div class="company-stock-price">$${inrToUsd(company.price)}</div>
                     <span class="company-industry">${company.industry}</span>
@@ -403,11 +401,13 @@ async function showCompantList() {
                         <span class="trend-rate ${companyTrendRateColorClass}">${company.change_percent}</span>
                     </div>
                     <button class="details-btn">Details</button>
-                </div>
-            </div>
-        </li>`;
-    });
+                    </div>
+                    </div>
+                    </li>`;
+        tickers.innerHTML += `<button>${getShortForm(company.name)}</button>`
 
+    });
+    
     const trendValues = document.getElementsByClassName("metric-value-row")
     trendValues.innerHTML = ""
 
@@ -424,14 +424,44 @@ async function showCompantList() {
     trendValues[1].innerHTML = `
        ?`
     trendValues[2].innerHTML = `
-        <span class="metric-value">$${averageProfit}</span>
-        <span class="metric-trend ${companyAverageTrendRateColorClass}"><img src="/static/svgs/${companyAverageTrendRateIcon}" />${averageChange}%</span>`
-
+    <span class="metric-value">$${averageProfit}</span>
+    <span class="metric-trend ${companyAverageTrendRateColorClass}"><img src="/static/svgs/${companyAverageTrendRateIcon}" />${averageChange}%</span>`
+    
     const companiesNames = document.querySelectorAll(".company-name");
-    document.querySelectorAll(".details-btn").forEach((el, i) => {
-        el.addEventListener("click", (e) => {
+    
+    const detailButtons = document.querySelectorAll(".details-btn")
+    detailButtons.forEach((btn, i) => {
+        btn.addEventListener("click", (e) => {
+            document.getElementById("symbol").textContent = tickerButtons[i].textContent;
+            document.getElementById("companyName").textContent = companiesNames[i];
             showTradingChart(companiesNames[i].innerHTML)
         })
     })
+    // Active toggle for tickers
+    const tickerButtons = document.querySelectorAll("#tickers button");
+    tickerButtons.forEach((btn, i) => {
+        btn.addEventListener("click", () => {
+            tickerButtons.forEach(b => b.classList.remove("activebtn"));
+            btn.classList.add("activebtn");
+            document.getElementById("symbol").textContent = btn.textContent;
+            document.getElementById("companyName").textContent = companiesNames[i];
+            showTradingChart(companiesNames[i].innerHTML)
+        });
+    });
+    if(tickerButtons) {
+        tickerButtons[0].classList.add("activebtn")
+    }
+
+    const intervalButtons = document.querySelectorAll("#intervals button");
+    intervalButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            intervalButtons.forEach(b => b.classList.remove("activebtn"));
+            btn.classList.add("activebtn");
+        });
+    });
+    if(intervalButtons) {
+        intervalButtons[0].classList.add("activebtn")
+    }
 }
 showCompantList()
+

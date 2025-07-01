@@ -6,7 +6,6 @@ import os
 from datetime import datetime
 from  livereload import Server
 
-# Dictionary of companies and their NSE ticker symbols
 companies = {
     "Reliance Industries": "RELIANCE.NS",
     "HDFC Bank": "HDFCBANK.NS",
@@ -130,24 +129,24 @@ def stock_data():
                 "error": str(e)
             })
 
-    # Save with timestamp as key
-    file_path = "static/json/stock_data_append.json"
+    # # Save with timestamp as key
+    # file_path = "static/json/stock_data_append.json"
  
-    timestamp = str(int(datetime.now().timestamp()))
+    # timestamp = str(int(datetime.now().timestamp()))
 
-    if os.path.exists(file_path):
-        with open(file_path, "r") as f:
-            try:
-                all_data = json.load(f)
-            except json.JSONDecodeError:
-                all_data = {}
-    else:
-        all_data = {}
+    # if os.path.exists(file_path):
+    #     with open(file_path, "r") as f:
+    #         try:
+    #             all_data = json.load(f)
+    #         except json.JSONDecodeError:
+    #             all_data = {}
+    # else:
+    #     all_data = {}
 
-    all_data[timestamp] = stock_info
+    # all_data[timestamp] = stock_info
 
-    with open(file_path, "w") as f:
-        json.dump(all_data, f, indent=4)
+    # with open(file_path, "w") as f:
+    #     json.dump(all_data, f, indent=4)
 
     return jsonify(stock_info)
 
