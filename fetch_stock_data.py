@@ -63,6 +63,16 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
+# Route for Sign In form
+@app.route('/form.html')
+def form():
+    return render_template('form.html')
+
+@app.route('/signin.html')
+def signin():
+    return render_template('signin.html')
+
+
 @app.route("/stock-data")
 def stock_data():
     stock_info = []

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+    <link rel="icon" href="/static/icons/main.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+      
+      body {
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+      
+      .login-box {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 40px 30px;
+        width: 100%;
+        max-width: 400px;
+        color: #fff;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      }
+      
+      .login-box h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 600;
+        color: #fff;
+      }
+      
+      .input-group {
+        position: relative;
+        margin-bottom: 25px;
+      }
+      
+      .input-group input {
+        width: 100%;
+        padding: 12px 40px 12px 40px;
+        border: none;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        font-size: 14px;
+        outline: none;
+      }
+      
+      .input-group label {
+        position: absolute;
+        left: 40px;
+        top: -10px;
+        background-color: rgba(15, 32, 39, 1);
+        padding: 0 5px;
+        font-size: 12px;
+        color: #aaa;
+      }
+      
+      .input-group .fa {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+      }
+      
+      .options {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: #aaa;
+        margin-bottom: 20px;
+      }
+      
+      .options input {
+        margin-right: 5px;
+      }
+      
+      .login-box button {
+        width: 100%;
+        background: #00c6ff;
+        background: linear-gradient(to right, #0072ff, #00c6ff);
+        color: #fff;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      
+      .login-box button:hover {
+        background: linear-gradient(to right, #005bea, #00c6ff);
+      }
+      
+      .bottom-text {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 13px;
+      }
+      
+      .bottom-text a {
+        color: #00c6ff;
+        text-decoration: none;
+      }
+      
+      @media (max-width: 480px) {
+        .login-box {
+          padding: 30px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-box">
+      <h2>Welcome Back</h2>
+      <form>
+        <div class="input-group">
+          <i class="fa fa-envelope"></i>
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="you@example.com" required />
+        </div>
+        <div class="input-group">
+          <i class="fa fa-lock"></i>
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" required />
+        </div>
+        <div class="options">
+          <label><input type="checkbox" />Remember me</label>
+          <a href="#">Forgot Password?</a>
+        </div>
+        <button type="submit">Sign In</button>
+        <div class="bottom-text">
+          Don't have an account? <a href="signin.html">Create one</a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
