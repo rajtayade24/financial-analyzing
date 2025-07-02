@@ -582,20 +582,20 @@ main>.tabs button img {
   border-radius: var(--card-radius);
 }
 
-#chart {
+#charts-container {
   background-color: var(--section-bg);
 }
 
 
-#chart tr:first-child td:first-child {
+#charts-container tr:first-child td:first-child {
   width: 0;
 }
 
-#chart tr:last-child td {
+#charts-container tr:last-child td {
   height: fit-content;
 }
 
-#chart td:last-child {
+#charts-container td:last-child {
   width: 60px;
 }
 
@@ -608,6 +608,7 @@ main>.tabs button img {
   position: absolute;
   z-index: 10;
   font-size: 12px;
+  display: none;
 }
 
 #tooltip div {

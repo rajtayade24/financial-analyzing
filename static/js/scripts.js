@@ -125,7 +125,6 @@ async function fetchData() {
     console.log("fetching...")
     const res = await fetch("http://127.0.0.1:5000/stock-data");
     const data = await res.json();
-    console.log("Fetched data:", data);
     return data;
 }
 
@@ -270,7 +269,7 @@ document.getElementById("lineChartBtn").addEventListener("click", function () {
 });
 drawBarChart();
 
-const chartContainer = document.getElementById('chart');
+const chartContainer = document.getElementById('charts-container');
 function setChartHeight() {
     const panelHeight = getComputedStyle(document.querySelector(".panel")).height || "0px";
     chartContainer.style.height = `calc(100% - ${panelHeight} - 20px)`;
@@ -283,121 +282,108 @@ window.addEventListener('resize', () => {
     chart.resize(chartContainer.clientWidth, chartContainer.clientHeight);
 });
 
-async function getNextBar(candleSeries, companyName, lastClose, timeStamp, timeChangeFactor) {
-    const all = await fetchData();
-    const company = all.find(c => c.name === companyName);
-    console.log(company)
-
-    console.log(timeStamp, lastClose, company.price)
-
-    let nextBar = {
-        time: timeStamp,
-        open: lastClose,
-        close: company.price,
-        high: company.price + Math.floor(Math.random() * 6),
-        low: lastClose - Math.floor(Math.random() * 6)
-    };
-    timeStamp += timeChangeFactor;
-
-    candleSeries.update(nextBar);
-
-    lastClose = nextBar.close;
+async function getNextBar(companyName, lastClose, timeStamp, intervalSec) {
     setTimeout(async () => {
-        await getNextBar(candleSeries, companyName, lastClose, timeStamp, timeChangeFactor)
-    }, timeChangeFactor * 1000);
+        const all = await fetchData();
 
-    console.log(candleSeries)
+        const company = all.find(c => c.name === companyName);
+        console.log(timeStamp, lastClose, company.price)
+
+        const nextTIme = timeStamp + intervalSec;
+        let nextBar = {
+            time: nextTIme,
+            open: lastClose,
+            high: company.price + Math.floor(Math.random() * 6),
+            low: lastClose - Math.floor(Math.random() * 6),
+            close: company.price,
+            // volume: company.volume || 0
+        };
+
+        // Update chart in-place
+        const { candleSeries, data } = chartsByCompany[companyName];
+        candleSeries.update(nextBar);
+        data.push(nextBar);
+
+        await getNextBar(companyName, nextBar.close, nextTIme, intervalSec)
+    }, intervalSec * 1000);
 }
 
 let chart;
+const chartsByCompany = {};
+
 async function getTradingCharts() {
-    chart = LightweightCharts.createChart(document.getElementById('chart'), {
-        width: chartContainer.clientWidth,
-        height: chartContainer.clientHeight,
-        layout: {
-            background: { color: '#0B1325' },
-            textColor: '#d1d4dc',
-        },
-        grid: {
-            vertLines: { color: '#2B2B43' },
-            horzLines: { color: '#363C4E' },
-        },
-        crosshair: {
-            mode: LightweightCharts.CrosshairMode.Normal,
-        },
-        timeScale: {
-            timeVisible: true,
-            secondsVisible: true,
-        },
-        rightPriceScale: {
-            borderColor: '#485c7b',
-        }
-    });
-    const candleSeries = chart.addCandlestickSeries({
-        upColor: '#26a69a',
-        downColor: '#ef5350',
-        wickUpColor: '#26a69a',
-        wickDownColor: '#ef5350',
-        borderVisible: false
-    });
     const all = await fetchData();
-    all.forEach((obj, i) => {
-        company = obj.name
+
+    all.forEach((company, i) => {
+        const div = document.createElement("div");
+        div.id = `chart-${getShortForm(company.name)}`;
+        div.classList.add("charts")
+        div.style.display = "none"
+        document.getElementById('charts-container').appendChild(div);
+
+        chart = LightweightCharts.createChart(div, {
+            width: chartContainer.clientWidth,
+            height: chartContainer.clientHeight,
+            layout: {
+                background: { color: '#0B1325' },
+                textColor: '#d1d4dc',
+            },
+            grid: {
+                vertLines: { color: '#2B2B43' },
+                horzLines: { color: '#363C4E' },
+            },
+            crosshair: {
+                mode: LightweightCharts.CrosshairMode.Normal,
+            },
+            timeScale: {
+                timeVisible: true,
+                secondsVisible: true,
+            },
+            rightPriceScale: {
+                borderColor: '#485c7b',
+            }
+        });
+        const candleSeries = chart.addCandlestickSeries({
+            upColor: '#26a69a',
+            downColor: '#ef5350',
+            wickUpColor: '#26a69a',
+            wickDownColor: '#ef5350',
+            borderVisible: false
+        });
+
         let timeStamp = Math.floor(Date.now() / 1000)
 
         const initialBar = {
             time: timeStamp,
             open: company.close,
-            close: company.price,
             high: company.high,
             low: company.low,
+            close: company.price,
+            //   volume: company.volume || 0
         };
-        let lastClose = initialBar.close;
         candleSeries.setData([initialBar]);
 
-        let timeChangeFactor = 15;
-        getNextBar(candleSeries, company, lastClose, timeStamp, timeChangeFactor)
+        // Store references for updates & later “show”
+        chartsByCompany[company.name] = { chart, candleSeries, data: [initialBar] };
+
+        let intervalSec = 60;
+        getNextBar(company.name, initialBar.close, timeStamp, intervalSec)
     })
 }
 async function showTradingChart(companyName) {
-    const chartContainer = document.getElementById('chart');
-    if (chart) {
-        chartContainer.innerHTML = ''; // Remove previous chart's canvas
-    }
-    chart = LightweightCharts.createChart(document.getElementById('chart'), {
-        width: chartContainer.clientWidth,
-        height: chartContainer.clientHeight,
-        layout: {
-            background: { color: '#0B1325' },
-            textColor: '#d1d4dc',
-        },
-        grid: {
-            vertLines: { color: '#2B2B43' },
-            horzLines: { color: '#363C4E' },
-        },
-        crosshair: {
-            mode: LightweightCharts.CrosshairMode.Normal,
-        },
-        timeScale: {
-            timeVisible: true,
-            secondsVisible: true,
-        },
-        rightPriceScale: {
-            borderColor: '#485c7b',
-        }
-    });
-    const candleSeries = chart.addCandlestickSeries({
-        upColor: '#26a69a',
-        downColor: '#ef5350',
-        wickUpColor: '#26a69a',
-        wickDownColor: '#ef5350',
-        borderVisible: false
-    });
+    document.querySelectorAll(".charts").forEach(ch => {
+        ch.style.display = "none"
+    })
+
+    document.getElementById(`chart-${getShortForm(companyName)}`).style.display = "block"
 
     const tooltip = document.getElementById('tooltip');
     const [openEl, highEl, lowEl, closeEl] = tooltip.querySelectorAll(".tooltip-data");
     const timeEl = tooltip.querySelector("#time")
 
+    const { chart, candleSeries } = chartsByCompany[companyName];
+    
+    chart.unsubscribeCrosshairMove();
     chart.subscribeCrosshairMove(param => {
         if (!param || !param.time || !param.seriesData.has(candleSeries)) {
             timeEl.textContent = openEl.textContent = highEl.textContent = lowEl.textContent = closeEl.textContent = "--";
@@ -406,7 +392,7 @@ async function showTradingChart(companyName) {
         }
         tooltip.style.display = "block"
 
-        const data = param.seriesData.get(candleSeries);
+        data = param.seriesData.get(candleSeries);
         const time = new Date(param.time * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
 
         timeEl.textContent = time;
@@ -415,7 +401,7 @@ async function showTradingChart(companyName) {
         lowEl.textContent = `$${data.low.toFixed(2)}`;
         closeEl.textContent = `$${data.close.toFixed(2)}`;
 
-        const rect = document.getElementById('chart').getBoundingClientRect();
+        const rect = document.getElementById('charts-container').getBoundingClientRect();
         console.log(rect.left, window.scrollX, param.point.x)
         if (window.innerWidth - rect.left - param.point.x <= 140) {
             tooltip.style.left = rect.left + window.scrollX + param.point.x - 140 - 20 + 'px'; // rect.left - hori dist of chart from left window
@@ -428,31 +414,13 @@ async function showTradingChart(companyName) {
             tooltip.style.top = rect.top + window.scrollY + param.point.y + 20 + 'px';
         }
     });
-
-    const all = await fetchData();
-
-    const company = all.find(c => c.name === companyName);
-    console.log(company)
-
-    let timeStamp = Math.floor(Date.now() / 1000)
-
-    const initialBar = {
-        time: timeStamp,
-        open: company.close,
-        close: company.price,
-        high: company.high,
-        low: company.low,
-    };
-    let lastClose = initialBar.close;
-    candleSeries.setData([initialBar]);
-
-    let timeChangeFactor = 15;
-    await getNextBar(candleSeries, companyName, lastClose, timeStamp, timeChangeFactor)
 }
 async function main() {
-    showTradingChart("Reliance Industries")
+    await getTradingCharts()
+    await showTradingChart("Reliance Industries")
 }
 main()
+
 function getShortForm(companyName) {
     const shortForm = companyName
         .split(" ")
@@ -538,6 +506,8 @@ async function showCompantList() {
         btn.addEventListener("click", (e) => {
             document.getElementById("symbol").textContent = tickerButtons[i].textContent;
             document.getElementById("companyName").textContent = companiesNames[i].innerHTML;
+            tickerButtons.forEach(b => b.classList.remove("activebtn"));
+            tickerButtons[i].classList.add("activebtn");
             showTradingChart(companiesNames[i].innerHTML)
         })
     })
