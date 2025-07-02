@@ -22,22 +22,22 @@
     <header>
       <aside>
         <div class="menubtn-cont">
-          <button class="menubtn"><img class="invert" src="/static/svgs/menu.svg" alt="" /></button>
+          <button class="menubtn pointer"><img class="invert" src="/static/svgs/menu.svg" alt="" /></button>
         </div>
         <div class="submenubtn-cont">
-          <button class="submenubtn"><a href="form.html"><span><img class="invert" src="/static/svgs/profile.svg" alt="" /></span></a></button>
+          <button class="submenubtn pointer"><a href="form.html"><span><img class="invert" src="/static/svgs/profile.svg" alt="" /></span></a></button>
           <span>Profile</span>
         </div>
-        <div class="submenubtn-cont" id="tradingbtn">
-          <button class="submenubtn"><span><img class="invert" src="/static/svgs/trading.svg" alt="" /></span></button>
+        <div class="submenubtn-cont">
+          <button class="submenubtn pointer" id="tradingbtn"><span><img class="invert" src="/static/svgs/trading.svg" alt="" /></span></button>
           <span>Trading</span>
         </div>
-        <div class="submenubtn-cont" id="chartbtn">
-          <button class="submenubtn"><span><img class="invert" src="/static/svgs/chart.svg" alt="" /></span></button>
+        <div class="submenubtn-cont">
+          <button class="submenubtn pointer" id="chartbtn"><span><img class="invert" src="/static/svgs/chart.svg" alt="" /></span></button>
           <span>Chart Station</span>
         </div>
         <div class="submenubtn-cont">
-          <button class="submenubtn"><span><img class="invert" src="/static/svgs/newspaper.svg" alt="" /></span></button>
+          <button class="submenubtn pointer"><span><img class="invert" src="/static/svgs/newspaper.svg" alt="" /></span></button>
           <span>News</span>
         </div>
       </aside>
@@ -57,8 +57,8 @@
         </div>
         <div class="buttons">
           <button class="themebtn pointer"><img src="/static/svgs/theme.svg" alt="" /></button>
-          <button class="btn"><img class="contact" src="/static/svgs/contact.svg" alt="contact" /> <span>Connect Bank</span></button>
-          <button class="btn btn-primary"><img class="Account" src="/static/svgs/account.svg" alt="contact" /> <span>Add Account</span></button>
+          <button class="btn pointer"><img class="contact" src="/static/svgs/contact.svg" alt="contact" /> <span>Connect Bank</span></button>
+          <button class="btn btn-primary pointer"><img class="Account" src="/static/svgs/account.svg" alt="contact" /> <span>Add Account</span></button>
         </div>
       </nav>
     </header>
@@ -70,8 +70,8 @@
           <p class="subtitle">Powerful tools for analyzing and visualizing your business finances.</p>
           <p class="desc">Analyze data, discover insights, and make smarter financial decisions.</p>
           <div class="header-buttons">
-            <button class="primary-btn">Get Started</button>
-            <button class="outline-btn">Learn More</button>
+            <button class="primary-btn pointer">Get Started</button>
+            <button class="outline-btn pointer">Learn More</button>
           </div>
         </div>
         <div class="header-illustration">
@@ -141,9 +141,9 @@
           </nav>
         </div>
         <div class="chart-toggle">
-          <button class="toggle-btn active" id="barChartBtn">Bar Chart</button>
-          <button class="toggle-btn" id="lineChartBtn">Line Chart</button>
-          <button class="toggle-btn" id="pieChartBtn">Pie Chart</button>
+          <button class="toggle-btn active pointer" id="barChartBtn">Bar Chart</button>
+          <button class="toggle-btn pointer" id="lineChartBtn">Line Chart</button>
+          <button class="toggle-btn pointer" id="pieChartBtn">Pie Chart</button>
         </div>
         <canvas id="individual-company-data" width="500" height="300"></canvas>
       </section>
@@ -164,12 +164,19 @@
 
             <!-- Time Intervals -->
             <div class="button-group" id="intervals">
-              <button class="activebtn">1H</button>
-              <button>4H</button>
-              <button>1D</button>
-              <button>1W</button>
-              <button>1M</button>
+              <button class="pointer">1H</button>
+              <button class="pointer">4H</button>
+              <button class="pointer">1D</button>
+              <button class="pointer">1W</button>
+              <button class="activebtn pointer">1M</button>
             </div>
+          </div>
+          <div id="tooltip">
+            <div id="time"></div>
+            <div>Open: <span class="tooltip-data open">$--</span></div>
+            <div>High: <span class="tooltip-data high">$--</span></div>
+            <div>Low: <span class="tooltip-data low">$--</span></div>
+            <div>Close: <span class="tooltip-data close">$--</span></div>
           </div>
           <div id="chart" class="trading-chart"></div>
         </div>
@@ -177,6 +184,7 @@
         <div id="company-card-cont">
           <h1>Nifty 50 Companies List 2025 : Top 50 Stocks in India</h1>
           <ul id="company-card-list">
+          <!--
             <li class="company-card">
               <div class="company-card-header">
                 <span class="company-logo"><img src="/static/logo/RELIANCE.NS.png" alt="company-logo" /></span>
@@ -192,17 +200,19 @@
                     <img src="/static/svgs/trand-increase.svg" alt="metric-trend" />
                     <span class="trend-rate">+12%</span>
                   </div>
-                  <button class="details-btn"><a href="">Details</a></button>
+                  <button class="details-btn pointer"><a href="">Details</a></button>
                 </div>
               </div>
             </li>
+            -->
             <div class="loader"></div>
           </ul>
         </div>
       </section>
 
-      <nav class="tabs">
-        <button class="tab">
+      <!--
+        <nav class="tabs">
+          <button class="tab">
           <img src="/static/svgs/tab1.svg" alt="tab" />
           Portfolio Tracker
         </button>
@@ -219,6 +229,7 @@
           Goal Tracker
         </button>
       </nav>
+      -->
     </main>
 
     <!-- Footer -->
@@ -227,6 +238,5 @@
     </footer>
 
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-    <!-- <script src="{{ url_for('static', filename='js/company_data.js') }}"></script> -->
   </body>
 </html>

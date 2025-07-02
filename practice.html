@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -30,6 +30,7 @@
       border-radius: 10px;
       box-shadow: 0 0 8px #000;
       min-width: 140px;
+      position: absolute;
     }
 
     #tooltip div {
@@ -53,7 +54,6 @@
       <div>High: <span>$--</span></div>
       <div>Low: <span>$--</span></div>
       <div>Close: <span>$--</span></div>
-      <div>Volume: <span>--</span></div>
     </div>
   </div>
 
@@ -96,11 +96,11 @@
     candleSeries.setData(sampleData);
 
     const tooltip = document.getElementById('tooltip');
-    const [timeEl, openEl, highEl, lowEl, closeEl, volumeEl] = tooltip.querySelectorAll("span");
+    const [timeEl, openEl, highEl, lowEl, closeEl] = tooltip.querySelectorAll("span");
 
     chart.subscribeCrosshairMove(param => {
       if (!param || !param.time || !param.seriesData.has(candleSeries)) {
-        timeEl.textContent = openEl.textContent = highEl.textContent = lowEl.textContent = closeEl.textContent = volumeEl.textContent = "--";
+        timeEl.textContent = openEl.textContent = highEl.textContent = lowEl.textContent = closeEl.textContent  = "--";
         return;
       }
 
@@ -112,10 +112,11 @@
       highEl.textContent = `$${data.high.toFixed(2)}`;
       lowEl.textContent = `$${data.low.toFixed(2)}`;
       closeEl.textContent = `$${data.close.toFixed(2)}`;
-      volumeEl.textContent = data.volume.toLocaleString();
       
-      tooltip.style.left = rect.left + window.scrollX + param.point.x + 20 + 'px';
-      tooltip.style.top = rect.top + window.scrollY + param.point.y + 20 + 'px';
+      const rect = document.getElementById('chart').getBoundingClientRect();
+      console.log( rect.left, window.scrollX, param.point.x)
+      tooltip.style.left = rect.left + window.scrollX + param.point.x + 20 + 'px'; // rect.left - hori dist of chart from left window
+      tooltip.style.top = rect.top + window.scrollY + param.point.y + 20 + 'px'; // param.point.x - hori dist of candle form left chart
     });
 
     tooltip.style.position = 'absolute';
@@ -125,137 +126,4 @@
 
 </body>
 
-</html> -->
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-  <title>UNIX Timestamp in Seconds</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-    #timestamp {
-      font-size: 2em;
-      color: #333;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>Current UNIX Timestamp (in seconds)</h1>
-  <div id="timestamp">Loading...</div>
-
-  <script>
-    function updateUnixTimestamp() {
-      const unixTimestampInSeconds = Math.floor(Date.now() / 1000);
-      document.getElementById("timestamp").textContent = unixTimestampInSeconds;
-    }
-
-    // Initial call
-    updateUnixTimestamp();
-
-    // Update every second
-    setInterval(updateUnixTimestamp, 1000);
-  </script>
-
-</body>
-</html> -->
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Menu Button Span Expand</title>
-  <style>
-    body {
-      background: #1a1a2e;
-      font-family: Arial, sans-serif;
-      color: white;
-      padding: 20px;
-    }
-
-    .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      width: 200px;
-    }
-
-    .submenubtn-cont {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #16213e;
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      overflow: hidden;
-      transition: background 0.3s;
-    }
-
-    .submenubtn-cont:hover {
-      background: #0f3460;
-    }
-
-    .submenu-label {
-      display: inline-block;
-      width: 0;
-      opacity: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      transition: width 0.3s ease, opacity 0.3s ease;
-    }
-
-    .submenubtn-cont.active .submenu-label {
-      width: 120px;
-      opacity: 1;
-    }
-
-    .icon {
-      width: 24px;
-      height: 24px;
-      background: white;
-      border-radius: 50%;
-    }
-  </style>
-</head>
-<body>
-
-  <h2>Menu Buttons</h2>
-  <div class="menu">
-    <div class="submenubtn-cont">
-      <div class="icon">gggg</div>
-      <span class="submenu-label">Profile</span>
-    </div>
-    <div class="submenubtn-cont">
-      <div class="icon">gggg</div>
-      <span class="submenu-label">Trading</span>
-    </div>
-    <div class="submenubtn-cont">
-      <div class="icon">gggg</div>
-      <span class="submenu-label">Chart Station</span>
-    </div>
-    <div class="submenubtn-cont">
-      <div class="icon">gggg</div>
-      <span class="submenu-label">News</span>
-    </div>
-  </div>
-
-  <script>
-    document.querySelectorAll('.submenubtn-cont').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const isActive = btn.classList.contains('active');
-        document.querySelectorAll('.submenubtn-cont').forEach(el => el.classList.remove('active'));
-        if (!isActive) {
-          btn.classList.add('active');
-        }
-      });
-    });
-  </script>
-
-</body>
 </html>
