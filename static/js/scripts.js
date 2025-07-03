@@ -398,8 +398,8 @@ async function showTradingChart(companyName) {
         } else {
             tooltip.style.left = rect.left + window.scrollX + param.point.x + 20 + 'px';
         }
-        if (window.innerHeight - rect.top - param.point.y - 130 - 20 <= 125) {
-            tooltip.style.top = rect.top + window.scrollY + param.point.y - 130 - 20 + 'px'; // param.point.x - hori dist of candle form left chart
+        if (window.innerHeight - rect.top - param.point.y <= 125) {
+            tooltip.style.top = rect.top + window.scrollY + param.point.y - 125 - 20 + 'px'; // param.point.x - hori dist of candle form left chart
         } else {
             tooltip.style.top = rect.top + window.scrollY + param.point.y + 20 + 'px';
         }
