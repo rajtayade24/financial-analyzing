@@ -1,5 +1,4 @@
-console.log(window.innerWidth)
-console.log(window.innerHeight)
+console.log(window.innerWidth, window.innerHeight)
 
 let isDark = false;
 function setTheme() {
@@ -17,12 +16,6 @@ function setTheme() {
         root.setProperty('--button-bg', '#4f8ef7');
         root.setProperty('--muted-text', '#64748b');
         root.setProperty('--active-tab-bg', '#aaa');
-        chart.applyOptions({
-            layout: {
-                background: { color: 'white' },
-                textColor: "black"
-            }
-        });
     } else {
         root.setProperty('--primary-text', 'white');
         root.setProperty('--primary-accent', '#4f8ef7');
@@ -35,13 +28,6 @@ function setTheme() {
         root.setProperty('--button-bg', '#4f8ef7');
         root.setProperty('--muted-text', '#64748b');
         root.setProperty('--active-tab-bg', '#1643a8');
-
-        chart.applyOptions({
-            layout: {
-                background: { color: '#0B1325' },
-                textColor: '#d1d4dc',
-            }
-        });
     }
 }
 
@@ -276,39 +262,7 @@ function setChartHeight() {
     chartContainer.style.width = `100%`;
 }
 setChartHeight()
-// Resize chart on window resize
-window.addEventListener('resize', () => {
-    setChartHeight();
-    chart.resize(chartContainer.clientWidth, chartContainer.clientHeight);
-});
 
-async function getNextBar(companyName, lastClose, timeStamp, intervalSec) {
-    setTimeout(async () => {
-        const all = await fetchData();
-
-        const company = all.find(c => c.name === companyName);
-        console.log(timeStamp, lastClose, company.price)
-
-        const nextTIme = timeStamp + intervalSec;
-        let nextBar = {
-            time: nextTIme,
-            open: lastClose,
-            high: company.price + Math.floor(Math.random() * 6),
-            low: lastClose - Math.floor(Math.random() * 6),
-            close: company.price,
-            // volume: company.volume || 0
-        };
-
-        // Update chart in-place
-        const { candleSeries, data } = chartsByCompany[companyName];
-        candleSeries.update(nextBar);
-        data.push(nextBar);
-
-        await getNextBar(companyName, nextBar.close, nextTIme, intervalSec)
-    }, intervalSec * 1000);
-}
-
-let chart;
 const chartsByCompany = {};
 
 async function getTradingCharts() {
@@ -321,7 +275,7 @@ async function getTradingCharts() {
         div.style.display = "none"
         document.getElementById('charts-container').appendChild(div);
 
-        chart = LightweightCharts.createChart(div, {
+        const chart = LightweightCharts.createChart(div, {
             width: chartContainer.clientWidth,
             height: chartContainer.clientHeight,
             layout: {
@@ -338,11 +292,16 @@ async function getTradingCharts() {
             timeScale: {
                 timeVisible: true,
                 secondsVisible: true,
+                tickMarkFormatter: (time) => {
+                    const date = new Date(time * 1000);
+                    return date.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+                }
             },
             rightPriceScale: {
                 borderColor: '#485c7b',
             }
         });
+
         const candleSeries = chart.addCandlestickSeries({
             upColor: '#26a69a',
             downColor: '#ef5350',
@@ -352,7 +311,6 @@ async function getTradingCharts() {
         });
 
         let timeStamp = Math.floor(Date.now() / 1000)
-
         const initialBar = {
             time: timeStamp,
             open: company.close,
@@ -361,15 +319,47 @@ async function getTradingCharts() {
             close: company.price,
             //   volume: company.volume || 0
         };
+        console.log(`time: ${initialBar.time}, open: ${initialBar.open}, close: ${initialBar.close}`)
+        
         candleSeries.setData([initialBar]);
-
         // Store references for updates & later “show”
-        chartsByCompany[company.name] = { chart, candleSeries, data: [initialBar] };
-
-        let intervalSec = 60;
-        getNextBar(company.name, initialBar.close, timeStamp, intervalSec)
+        chartsByCompany[company.name] = {
+            chart,
+            candleSeries,
+            data: [initialBar],
+            time: timeStamp
+        };
     })
+    let intervalSec = 60;
+    setTimeout(() => {
+        setInterval(async () => {
+            const latestData = await fetchData();
+            const timeNow = Math.floor(Date.now() / 1000);
+
+            latestData.forEach((company) => {
+                const chartObj = chartsByCompany[company.name];
+                if (!chartObj) return;
+
+                const lastClose = chartObj.data.slice(-1)[0].close;
+
+                const nextBar = {
+                    // time: chartObj.time + intervalSec,
+                    time: (timeNow || chartObj.time + intervalSec),
+                    open: lastClose,
+                    high: company.price + Math.floor(Math.random() * 6),
+                    low: lastClose - Math.floor(Math.random() * 6),
+                    close: company.price
+                };
+                console.log(`time: ${nextBar.time}, open: ${nextBar.open}, close: ${nextBar.close}`)
+
+                chartObj.candleSeries.update(nextBar);
+                chartObj.data.push(nextBar);
+                chartObj.time = nextBar.time;
+            })
+        }, intervalSec * 1000);
+    }, intervalSec * 1000);
 }
+
 async function showTradingChart(companyName) {
     document.querySelectorAll(".charts").forEach(ch => {
         ch.style.display = "none"
@@ -382,7 +372,7 @@ async function showTradingChart(companyName) {
     const timeEl = tooltip.querySelector("#time")
 
     const { chart, candleSeries } = chartsByCompany[companyName];
-    
+
     chart.unsubscribeCrosshairMove();
     chart.subscribeCrosshairMove(param => {
         if (!param || !param.time || !param.seriesData.has(candleSeries)) {
@@ -420,6 +410,22 @@ async function main() {
     await showTradingChart("Reliance Industries")
 }
 main()
+
+window.addEventListener('resize', () => {
+    Object.values(chartsByCompany).forEach(obj => {
+        obj.chart.resize(chartContainer.clientWidth, chartContainer.clientHeight);
+    });
+});
+document.querySelector(".buttons .themebtn").addEventListener("click", function () {
+    Object.values(chartsByCompany).forEach(obj => {
+        obj.chart.applyOptions({
+            layout: {
+                background: { type: 'solid', color: isDark ? 'white' : '#0B1325' },
+                textColor: isDark ? 'black' : '#d1d4dc',
+            }
+        });
+    });
+});
 
 function getShortForm(companyName) {
     const shortForm = companyName
