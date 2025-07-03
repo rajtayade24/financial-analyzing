@@ -25,20 +25,30 @@
           <button class="menubtn pointer"><img class="invert" src="/static/svgs/menu.svg" alt="" /></button>
         </div>
         <div class="submenubtn-cont">
-          <button class="submenubtn pointer"><a href="form.html"><span><img class="invert" src="/static/svgs/profile.svg" alt="" /></span></a></button>
-          <span>Profile</span>
+          <button class="submenubtn pointer">
+            <a href="form.html">
+              <span><img class="invert" src="/static/svgs/profile.svg" alt="" /></span>
+              <div class="label">Profile</div>
+            </a>
+          </button>
         </div>
         <div class="submenubtn-cont">
-          <button class="submenubtn pointer" id="tradingbtn"><span><img class="invert" src="/static/svgs/trading.svg" alt="" /></span></button>
-          <span>Trading</span>
+          <button class="submenubtn pointer" id="tradingbtn">
+            <span><img class="invert" src="/static/svgs/trading.svg" alt="" /></span>
+            <div class="label">Trading</div>
+          </button>
         </div>
         <div class="submenubtn-cont">
-          <button class="submenubtn pointer" id="chartbtn"><span><img class="invert" src="/static/svgs/chart.svg" alt="" /></span></button>
-          <span>Chart Station</span>
+          <button class="submenubtn pointer" id="chartbtn">
+            <span><img class="invert" src="/static/svgs/chart.svg" alt="" /></span>
+            <div class="label">Chart Station</div>
+          </button>
         </div>
         <div class="submenubtn-cont">
-          <button class="submenubtn pointer"><span><img class="invert" src="/static/svgs/newspaper.svg" alt="" /></span></button>
-          <span>News</span>
+          <button class="submenubtn pointer">
+            <span><img class="invert" src="/static/svgs/newspaper.svg" alt="" /></span>
+            <div class="label">News</div>
+          </button>
         </div>
       </aside>
       <nav class="navbar">
@@ -82,7 +92,7 @@
 
     <main class="m-l-65">
       <!-- Metrics Section -->
-      <section class="m-l-65">
+      <section>
         <div class="metrics">
           <div class="metric-card">
             <div class="metric-card-header">
@@ -174,19 +184,27 @@
           <div id="charts-container" class="trading-chart">
             <div id="tooltip">
               <div id="time"></div>
-              <div>Open: <span class="tooltip-data open">$--</span></div>
-              <div>High: <span class="tooltip-data high">$--</span></div>
-              <div>Low: <span class="tooltip-data low">$--</span></div>
-              <div>Close: <span class="tooltip-data close">$--</span></div>
+              <div>
+                Open: <span class="tooltip-data open">$--</span>
+              </div>
+              <div>
+                High: <span class="tooltip-data high">$--</span>
+              </div>
+              <div>
+                Low: <span class="tooltip-data low">$--</span>
+              </div>
+              <div>
+                Close: <span class="tooltip-data close">$--</span>
+              </div>
             </div>
-            <!--charts list-->
+            <!-- charts list -->
           </div>
         </div>
 
         <div id="company-card-cont">
-          <h1>Nifty 50 Companies List 2025 : Top 50 Stocks in India</h1>
+          <h1>Nifty 50: Top 50 Stocks in India</h1>
           <ul id="company-card-list">
-          <!--
+            <!-- 
             <li class="company-card">
               <div class="company-card-header">
                 <span class="company-logo"><img src="/static/logo/RELIANCE.NS.png" alt="company-logo" /></span>
@@ -206,13 +224,13 @@
                 </div>
               </div>
             </li>
-            -->
+             -->
             <div class="loader"></div>
           </ul>
         </div>
       </section>
 
-      <!--
+      <!-- 
         <nav class="tabs">
           <button class="tab">
           <img src="/static/svgs/tab1.svg" alt="tab" />
@@ -231,7 +249,7 @@
           Goal Tracker
         </button>
       </nav>
-      -->
+       -->
     </main>
 
     <!-- Footer -->

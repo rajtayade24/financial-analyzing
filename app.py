@@ -128,18 +128,18 @@ def build_stock_snapshot():
             if df is not None and len(df) > 0:
                 today, yesterday = (df.iloc[-1], df.iloc[-2]) if len(df) >= 2 else (df.iloc[-1], df.iloc[-1])
                 price = round(today["Close"], 2)
-                previous_close = round(yesterday["Close"], 2)
+                close = round(yesterday["Close"], 2)
                 high = round(today["High"], 2)
                 low = round(today["Low"], 2)
-                change_percent = round((price - previous_close) / previous_close * 100, 2) if previous_close else None
+                change_percent = round((price - close) / close * 100, 2) if close else None
             else:
-                price = previous_close = high = low = change_percent = None
+                price = close = high = low = change_percent = None
             meta = info_results.get(symbol, {})
             snapshot.append({
                 "name": name,
                 "symbol": symbol,
                 "price": price,
-                "previous_close": previous_close,
+                "close": close,
                 "change_percent": change_percent,
                 "high": high,
                 "low": low,
@@ -154,7 +154,7 @@ def build_stock_snapshot():
                 "name": name,
                 "symbol": symbol,
                 "price": None,
-                "previous_close": None,
+                "close": None,
                 "change_percent": None,
                 "high": None,
                 "low": None,
@@ -306,19 +306,19 @@ if __name__ == "__main__":
 
 #             if not hist.empty and len(hist) >= 2:
 #                 price = round(hist['Close'].iloc[-1], 2)
-#                 previous_close = round(hist['Close'].iloc[-2], 2)
+#                 close = round(hist['Close'].iloc[-2], 2)
 #                 high = round(hist['High'].iloc[-1], 2)
 #                 low = round(hist['Low'].iloc[-1], 2)
 #             elif not hist.empty:
 #                 price = round(hist['Close'].iloc[-1], 2)
-#                 previous_close = price
+#                 close = price
 #                 high = round(hist['High'].iloc[-1], 2)
 #                 low = round(hist['Low'].iloc[-1], 2)
 #             else:
-#                 price = previous_close = high = low = None
+#                 price = close = high = low = None
 
-#             if price and previous_close:
-#                 change_percent = round(((price - previous_close) / previous_close) * 100, 2)
+#             if price and close:
+#                 change_percent = round(((price - close) / close) * 100, 2)
 #             else:
 #                 change_percent = None
 
@@ -326,7 +326,7 @@ if __name__ == "__main__":
 #                 "name": name,
 #                 "symbol": symbol,
 #                 "price": price,
-#                 "previous_close": previous_close,
+#                 "close": close,
 #                 "change_percent": change_percent,
 #                 "high": high,
 #                 "low": low,
@@ -349,7 +349,7 @@ if __name__ == "__main__":
 #                 "name": name,
 #                 "symbol": symbol,
 #                 "price": None,
-#                 "previous_close": "none",
+#                 "close": "none",
 #                 "change_percent": "none",
 #                 "high": None,
 #                 "low": None,

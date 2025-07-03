@@ -10,21 +10,25 @@ function setTheme() {
         root.setProperty('--body-bg', '#f8fafc');
         root.setProperty('--head-section-bg', 'linear-gradient(90deg, #1e3a8a, #2563eb 40%, #312e81 100%)');
         root.setProperty('--section-bg', 'white');
-        root.setProperty('--card-border', '#e5e7eb');
-        root.setProperty('--card-radius', '1.2rem');
-        root.setProperty('--card-shadow', '1px 4px 20px 9px rgba(30, 41, 59, 0.08)');
+        root.setProperty('--section-border', '#e5e7eb');
+        root.setProperty('--section-radius', '1.2rem');
+        root.setProperty('--section-shadow', '1px 4px 20px 9px rgba(30, 41, 59, 0.08)');
+        root.setProperty('--card-bg', '#c0d1f8');
         root.setProperty('--button-bg', '#4f8ef7');
         root.setProperty('--muted-text', '#64748b');
         root.setProperty('--active-tab-bg', '#aaa');
+
+
     } else {
         root.setProperty('--primary-text', 'white');
         root.setProperty('--primary-accent', '#4f8ef7');
         root.setProperty('--body-bg', 'linear-gradient(135deg, #00010F, #0f172a)');
         root.setProperty('--head-section-bg', 'linear-gradient(to right, #0f172a, #1e1b4b, #3b0764)');
         root.setProperty('--section-bg', '#0B1325');
-        root.setProperty('--card-border', '#e5e7eb');
-        root.setProperty('--card-radius', '1.2rem');
-        root.setProperty('--card-shadow', '1px 4px 20px 9px rgba(30, 41, 59, 0.08)');
+        root.setProperty('--section-border', '#e5e7eb');
+        root.setProperty('--section-radius', '1.2rem');
+        root.setProperty('--section-shadow', '1px 4px 20px 9px rgba(30, 41, 59, 0.08)');
+        root.setProperty('--card-bg', '#111827');
         root.setProperty('--button-bg', '#4f8ef7');
         root.setProperty('--muted-text', '#64748b');
         root.setProperty('--active-tab-bg', '#1643a8');
@@ -78,20 +82,6 @@ function handleResize() {
 }
 handleResize();
 window.addEventListener("resize", handleResize);
-
-
-const submenubtnContent = document.querySelectorAll("header aside > div > span")
-document.querySelectorAll("header aside .submenubtn").forEach((el, i) => {
-    el.addEventListener("mouseenter", (e) => {
-        submenubtnContent[i].style.display = "flex"
-        submenubtnContent[i].style.width = "100px"
-    })
-})
-document.querySelectorAll("header aside .submenubtn-cont").forEach((el, i) => {
-    el.addEventListener("mouseleave", (e) => {
-        submenubtnContent[i].style.display = "none"
-    })
-})
 
 function inrToUsd(inrAmount, exchangeRate = 83.20) {
     if (inrAmount < 0) {
@@ -393,13 +383,13 @@ async function showTradingChart(companyName) {
 
         const rect = document.getElementById('charts-container').getBoundingClientRect();
         console.log(rect.left, window.scrollX, param.point.x)
-        if (window.innerWidth - rect.left - param.point.x <= 140) {
+        if (window.innerWidth - rect.left - param.point - 140 - 20 <= 0) {
             tooltip.style.left = rect.left + window.scrollX + param.point.x - 140 - 20 + 'px'; // rect.left - hori dist of chart from left window
         } else {
             tooltip.style.left = rect.left + window.scrollX + param.point.x + 20 + 'px';
         }
-        if (window.innerHeight - rect.top - param.point.y <= 125) {
-            tooltip.style.top = rect.top + window.scrollY + param.point.y - 125 - 20 + 'px'; // param.point.x - hori dist of candle form left chart
+        if (window.innerHeight - rect.top - param.point.y - 130 - 20 <= 125) {
+            tooltip.style.top = rect.top + window.scrollY + param.point.y - 130 - 20 + 'px'; // param.point.x - hori dist of candle form left chart
         } else {
             tooltip.style.top = rect.top + window.scrollY + param.point.y + 20 + 'px';
         }

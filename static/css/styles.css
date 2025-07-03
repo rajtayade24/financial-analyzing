@@ -6,11 +6,12 @@
   --body-bg: linear-gradient(135deg, #00010F, #0f172a);
   --head-section-bg: linear-gradient(to right, #0f172a, #1e1b4b, #3b0764);
   --section-bg: #0B1325;
-  --card-border: #e5e7eb;
-  --card-radius: 1.2rem;
-  --card-shadow: 1px 4px 20px 9px rgba(30, 41, 59, 0.08);
+  --section-border: #e5e7eb;
+  --section-radius: 1.2rem;
+  --section-shadow: 1px 4px 20px 9px rgba(30, 41, 59, 0.08);
+  --card-bg: #111827;
   --button-bg: #4f8ef7;
-  --active-tab-bg: #1643a8;
+  --active-tab-bg: #0d2761;
 }
 
 html {
@@ -48,39 +49,36 @@ header aside {
   position: absolute;
 }
 
+header aside .menubtn {
+  height: 77px;
+}
+
 header aside>div {
+  width: 65px;
   background-color: var(--section-bg);
   color: var(--primary-text);
-  display: flex;
-  align-items: center;
+  overflow: hidden;
+  transition: width 0.3s ease;
 }
 
-header aside>div>span {
-  height: 55px;
-  width: 100px !important;
-  background-color: var(--section-bg);
+header aside>div a {
+  width: 100%;
   display: flex;
+  ;
   align-items: center;
-  display: none;
-}
-
-header aside button span {
-  height: 100%;
-  width: min-content;
-  border-bottom: 2px solid var(--muted-text);
+  gap: 10px;
 }
 
 header aside button {
-  height: 50px;
-  width: 65px;
+  height: 55px;
+  width: 100%;
   min-width: 65px;
   background-color: var(--section-bg);
   display: flex;
-  justify-content: center;
   align-items: center;
   border: none;
-  margin: 0;
-  padding: 0;
+  padding: 0 10px;
+  gap: 10px;
 }
 
 header aside button img {
@@ -88,9 +86,22 @@ header aside button img {
   width: 40px;
 }
 
-header aside .menubtn {
-  height: 77px;
+header aside .label {
+  color: var(--primary-text);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.1s;
+  font-size: 14px;
 }
+
+header aside .submenubtn-cont:hover {
+  width: 180px;
+}
+
+header aside .submenubtn-cont:hover .label {
+  opacity: 1;
+}
+
 
 .navbar {
   width: 100%;
@@ -267,7 +278,7 @@ a:hover {
   font-weight: 600;
   padding: 0.75rem 2.5rem;
   border: none;
-  border-radius: var(--card-radius);
+  border-radius: var(--section-radius);
   font-size: 1.15rem;
   transition: background 0.16s, transform 0.18s;
   box-shadow: 0 3px 16px rgba(79, 142, 247, 0.13);
@@ -282,7 +293,7 @@ a:hover {
   background: transparent;
   color: #fff;
   border: 2px solid #fff8;
-  border-radius: var(--card-radius);
+  border-radius: var(--section-radius);
   font-size: 1.15rem;
   padding: 0.75rem 2.5rem;
   font-weight: 400;
@@ -321,7 +332,7 @@ main>.tabs {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  border: 1.5px solid var(--card-border);
+  border: 1.5px solid var(--section-border);
   border-radius: 10px;
   margin: 0 auto 2.5rem auto;
   padding: 10px 2rem;
@@ -364,9 +375,9 @@ main>.tabs button img {
 .metric-card {
   min-width: 230px;
   background: var(--section-bg);
-  border: 1.5px solid var(--card-border);
-  border-radius: var(--card-radius);
-  box-shadow: var(--card-shadow);
+  border: 1.5px solid var(--section-border);
+  border-radius: var(--section-radius);
+  box-shadow: var(--section-shadow);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -469,8 +480,8 @@ main>.tabs button img {
   border: 2px solid black;
   margin: 20px auto;
   padding: 30px;
-  border-radius: var(--card-radius);
-  border: 2px solid var(--card-border);
+  border-radius: var(--section-radius);
+  border: 2px solid var(--section-border);
 }
 
 @media (max-width: 1000px) {
@@ -569,9 +580,10 @@ main>.tabs button img {
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
-  border: 2px solid var(--card-border);
-  border-radius: var(--card-radius);
-  margin: 30px 0;
+  gap: 10px;
+  border: 2px solid var(--section-border);
+  border-radius: var(--section-radius);
+  margin: 30px 10px 30px;
 }
 
 .trading-chart-cont {
@@ -579,7 +591,7 @@ main>.tabs button img {
   width: 100%;
   max-width: 950PX;
   border: 2px solid var(--muted-text);
-  border-radius: var(--card-radius);
+  border-radius: var(--section-radius);
 }
 
 #charts-container {
@@ -600,7 +612,7 @@ main>.tabs button img {
 }
 
 #tooltip {
-  background-color: #111827;
+  background-color: var(--card-bg);
   padding: 12px 16px;
   border-radius: 10px;
   box-shadow: 0 0 8px #000;
@@ -627,12 +639,9 @@ main>.tabs button img {
   color: tomato;
 }
 
-#tooltip .tooltip-data.high, #tooltip .close {
+#tooltip .tooltip-data.high,
+#tooltip .close {
   color: #16a34a;
-}
-
-.company-card-section h1 {
-  margin: 1rem;
 }
 
 #company-card-cont {
@@ -640,7 +649,6 @@ main>.tabs button img {
   min-width: 450px;
   background-color: var(--section-bg);
   border: 2px solid var(--muted-text);
-  margin: 10px;
   border-radius: 30px;
 }
 
@@ -658,6 +666,7 @@ main>.tabs button img {
   }
 }
 
+
 .panel {
   width: 100%;
   background-color: var(--section-bg);
@@ -672,6 +681,36 @@ main>.tabs button img {
 
 .panel>div {
   margin: 0 50px;
+}
+
+@media (min-width: 1500px) {
+  .panel {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  #company-card-cont {
+    min-width: fit-content;
+  }
+
+  .panel>div {
+    margin: 0;
+  }
+
+  .header {
+    padding: 2.5rem 0 3.5rem 0;
+  }
+
+  .main-title {
+    margin: 0;
+  }
 }
 
 .stock-title span {
@@ -797,9 +836,9 @@ main>.tabs button img {
 .company-card {
   min-width: 230px;
   background: var(--section-bg);
-  border: 1.5px solid var(--card-border);
-  border-radius: var(--card-radius);
-  box-shadow: var(--card-shadow);
+  border: 1.5px solid var(--section-border);
+  border-radius: var(--section-radius);
+  box-shadow: var(--section-shadow);
   padding: 10px;
   font-size: 1.06rem;
   transition: box-shadow 0.21s, transform 0.12s;
