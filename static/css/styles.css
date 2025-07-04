@@ -34,11 +34,11 @@ body {
 }
 
 header:first-child {
+  width: 100%;
   display: flex;
   position: fixed;
   z-index: 999;
   top: 0;
-  width: 100%;
   background: var(--body-bg);
 }
 
@@ -64,7 +64,6 @@ header aside>div {
 header aside>div a {
   width: 100%;
   display: flex;
-  ;
   align-items: center;
   gap: 10px;
 }
@@ -246,6 +245,11 @@ a:hover {
   }
 }
 
+html,
+main {
+  min-width: 950px;
+}
+
 .main-title {
   color: #fff;
   font-size: 2.85rem;
@@ -324,9 +328,11 @@ a:hover {
     display: none;
   }
 }
+
 section {
   margin: 10px;
 }
+
 /* Metrics */
 .metrics {
   max-width: 1160px;
@@ -340,7 +346,6 @@ section {
 
 @media (max-width: 900px) {
   .metrics {
-    grid-template-columns: 1fr;
     gap: 1.2rem;
     padding: 0 1rem;
   }
@@ -448,14 +453,16 @@ section {
 }
 
 .market-chart-section {
+  width: 100%;
   min-height: 650px;
   max-width: calc(100vw - 65px - 450px - 40px - 50px);
   background-color: var(--section-bg);
   border: 2px solid black;
-  margin: 20px auto;
-  padding: 30px;
   border-radius: var(--section-radius);
   border: 2px solid var(--section-border);
+  padding: 30px;
+  margin: 20px auto;
+  position: relative;
 }
 
 @media (max-width: 1000px) {
@@ -663,15 +670,13 @@ section {
   }
 }
 
-@media (max-width: 800px) {
-  .panel {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 500px) {
   #company-card-cont {
     min-width: fit-content;
+  }
+
+  .header {
+    width: 100%;
   }
 
   .panel>div {
@@ -684,6 +689,10 @@ section {
 
   .main-title {
     margin: 0;
+  }
+
+  .market-chart-section {
+    min-width: 185vw;
   }
 }
 
