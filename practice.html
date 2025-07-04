@@ -2,128 +2,133 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>Stock Chart with Tooltip</title>
+  <meta charset="UTF-8">
+  <title>Top Stock News</title>
   <style>
-    body {
-      background-color: #0B1325;
-      font-family: monospace;
-      color: white;
-      margin: 0;
-      padding: 20px;
+    .news-card {
+      background: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
-    .container {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-    }
-
-    #chart {
-      width: 900px;
-      height: 450px;
-    }
-
-    #tooltip {
-      background-color: #111827;
-      padding: 12px 16px;
-      border-radius: 10px;
-      box-shadow: 0 0 8px #000;
-      min-width: 140px;
-      position: absolute;
-    }
-
-    #tooltip div {
-      margin-bottom: 6px;
-    }
-
-    #tooltip span {
-      float: right;
+    .news-card a {
+      color: #0077cc;
+      text-decoration: none;
     }
   </style>
-  <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 
 <body>
-
-  <div class="container">
-    <div id="chart"></div>
-    <div id="tooltip">
-      <div>Time: <span>--</span></div>
-      <div>Open: <span>$--</span></div>
-      <div>High: <span>$--</span></div>
-      <div>Low: <span>$--</span></div>
-      <div>Close: <span>$--</span></div>
-    </div>
-  </div>
+  
+  <h2>Latest Stock Market News (Top Companies)</h2>
+  <div id="news-container">Loading...</div>
 
   <script>
-    const chart = LightweightCharts.createChart(document.getElementById('chart'), {
-      layout: {
-        background: { color: '#0B1325' },
-        textColor: '#d1d4dc',
-      },
-      grid: {
-        vertLines: { color: '#2B2B43' },
-        horzLines: { color: '#363C4E' },
-      },
-      crosshair: {
-        mode: LightweightCharts.CrosshairMode.Normal,
-      },
-      timeScale: {
-        timeVisible: true,
-        secondsVisible: false,
-      },
-    });
+    const apiKey = 'd1jlku9r01qvg5gvahcgd1jlku9r01qvg5gvahd0';
+    const companies = {
+      "Reliance Industries": "RELIANCE.NS",
+      "HDFC Bank": "HDFCBANK.NS",
+      "TCS": "TCS.NS",
+      "Bharti Airtel": "BHARTIARTL.NS",
+      "ICICI Bank": "ICICIBANK.NS",
+      "State Bank of India": "SBIN.NS",
+      "Infosys": "INFY.NS",
+      "LIC": "LICI.NS",
+      "Hindustan Unilever": "HINDUNILVR.NS",
+      "ITC": "ITC.NS",
+      "L&T": "LT.NS",
+      "HCLTech": "HCLTECH.NS",
+      "Kotak Mahindra Bank": "KOTAKBANK.NS",
+      "Maruti Suzuki": "MARUTI.NS",
+      "Sun Pharma": "SUNPHARMA.NS",
+      "M&M": "M&M.NS",
+      "Axis Bank": "AXISBANK.NS",
+      "UltraTech Cement": "ULTRACEMCO.NS",
+      "HAL": "HAL.NS",
+      "NTPC": "NTPC.NS",
+      "Bajaj Finance": "BAJFINANCE.NS",
+      "Titan": "TITAN.NS",
+      "BEL": "BEL.NS",
+      "Adani Ports": "ADANIPORTS.NS",
+      "Adani Ent": "ADANIENT.NS",
+      "Wipro": "WIPRO.NS",
+      "Power Grid": "POWERGRID.NS",
+      "Tata Motors": "TATAMOTORS.NS",
+      "JSW Steel": "JSWSTEEL.NS",
+      "Coal India": "COALINDIA.NS",
+      "Bajaj Auto": "BAJAJ-AUTO.NS",
+      "Nestlé India": "NESTLEIND.NS",
+      "Asian Paints": "ASIANPAINT.NS",
+      "DLF": "DLF.NS",
+      "Trent": "TRENT.NS",
+      "IndiGo": "INDIGO.NS",
+      "Adani Power": "ADANIPOWER.NS",
+      "Tata Steel": "TATASTEEL.NS",
+      "Jio Fin": "JIOFIN.NS",
+      "Hindustan Zinc": "HINDZINC.NS",
+      "Grasim": "GRASIM.NS",
+      "SBI Life": "SBILIFE.NS",
+      "IRFC": "IRFC.NS",
+      "Divis Lab": "DIVISLAB.NS",
+      "Vedanta": "VEDL.NS"
+    };
 
-    const candleSeries = chart.addCandlestickSeries({
-      upColor: '#26a69a',
-      downColor: '#ef5350',
-      wickUpColor: '#26a69a',
-      wickDownColor: '#ef5350',
-      borderVisible: false,
-    });
+    const from = '2025-06-30';
+    const to = '2025-07-03';
 
-    // Sample data
-    const sampleData = [
-      { time: 1719723000, open: 172.84, high: 174.16, low: 172.84, close: 173.36, volume: 1179526 },
-      { time: 1719726600, open: 172.08, high: 174.06, low: 170.81, close: 173.76, volume: 779345 },
-      { time: 1719730200, open: 173.00, high: 175.12, low: 172.32, close: 174.00, volume: 985000 },
-      { time: 1719733800, open: 174.20, high: 175.90, low: 173.80, close: 175.50, volume: 1048320 },
-      { time: 1719737400, open: 175.60, high: 176.40, low: 174.90, close: 175.20, volume: 894512 },
-    ];
+    const allNews = [];
+    function getTodaysDate() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0'); // months are 0-based
+      const day = String(today.getDate()).padStart(2, '0');
 
-    candleSeries.setData(sampleData);
+      const formattedDate = `${year}-${month}-${day}`;
+      console.log(formattedDate); // e.g., "2025-07-03"
+      return formattedDate
+    }
+    const fetchNewsForSymbol = (symbol, name) => {
+      return fetch(`https://finnhub.io/api/v1/company-news?symbol=${symbol}&from=${from}&to=${getTodaysDate()}&token=${apiKey}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.length > 0) {
+            allNews.push({ ...data[0], company: name }); // take only latest
+          }
+        })
+        .catch(err => console.error(`Error for ${name}:`, err));
+    };
 
-    const tooltip = document.getElementById('tooltip');
-    const [timeEl, openEl, highEl, lowEl, closeEl] = tooltip.querySelectorAll("span");
+    const loadNews = async () => {
+      const promises = Object.entries(companies).map(([name, symbol]) =>
+        fetchNewsForSymbol(symbol, name)
+      );
 
-    chart.subscribeCrosshairMove(param => {
-      if (!param || !param.time || !param.seriesData.has(candleSeries)) {
-        timeEl.textContent = openEl.textContent = highEl.textContent = lowEl.textContent = closeEl.textContent  = "--";
-        return;
+      await Promise.all(promises);
+
+      allNews.sort((a, b) => b.datetime - a.datetime); // sort by latest
+
+      const topNews = allNews[0];
+      const container = document.getElementById('news-container');
+      container.innerHTML = '';
+
+      if (topNews) {
+        const card = document.createElement('div');
+        card.className = 'news-card';
+        card.innerHTML = `
+          <h4><a href="${topNews.url}" target="_blank">${topNews.headline}</a></h4>
+          <p><strong>${topNews.company}</strong>: ${topNews.summary}</p>
+          <small>${new Date(topNews.datetime * 1000).toLocaleString()}</small>
+        `;
+        container.appendChild(card);
+      } else {
+        container.innerHTML = "<p>No news found for any company.</p>";
       }
+    };
 
-      const data = param.seriesData.get(candleSeries);
-      const time = new Date(param.time * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-
-      timeEl.textContent = time;
-      openEl.textContent = `$${data.open.toFixed(2)}`;
-      highEl.textContent = `$${data.high.toFixed(2)}`;
-      lowEl.textContent = `$${data.low.toFixed(2)}`;
-      closeEl.textContent = `$${data.close.toFixed(2)}`;
-      
-      const rect = document.getElementById('chart').getBoundingClientRect();
-      console.log( rect.left, window.scrollX, param.point.x)
-      tooltip.style.left = rect.left + window.scrollX + param.point.x + 20 + 'px'; // rect.left - hori dist of chart from left window
-      tooltip.style.top = rect.top + window.scrollY + param.point.y + 20 + 'px'; // param.point.x - hori dist of candle form left chart
-    });
-
-    tooltip.style.position = 'absolute';
-    tooltip.style.zIndex = '10';
-
+    loadNews();
   </script>
-
 </body>
 
 </html>

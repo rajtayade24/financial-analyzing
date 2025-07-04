@@ -10,10 +10,12 @@
 
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <!--
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.0/dist/chartjs-adapter-luxon.umd.min.js"></script>
     <script src="https://unpkg.com/@panzoom/panzoom@9.4.0/dist/panzoom.min.js"></script>
+  --> 
     <!-- Lightweight Charts CDN -->
     <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
   </head>
@@ -45,7 +47,7 @@
           </button>
         </div>
         <div class="submenubtn-cont">
-          <button class="submenubtn pointer">
+          <button class="submenubtn pointer" id="newsbtn">
             <span><img class="invert" src="/static/svgs/newspaper.svg" alt="" /></span>
             <div class="label">News</div>
           </button>
@@ -92,7 +94,7 @@
 
     <main class="m-l-65">
       <!-- Metrics Section -->
-      <section>
+      <section class="metrics-section">
         <div class="metrics">
           <div class="metric-card">
             <div class="metric-card-header">
@@ -204,7 +206,7 @@
         <div id="company-card-cont">
           <h1>Nifty 50: Top 50 Stocks in India</h1>
           <ul id="company-card-list">
-            <!-- 
+            <!--   
             <li class="company-card">
               <div class="company-card-header">
                 <span class="company-logo"><img src="/static/logo/RELIANCE.NS.png" alt="company-logo" /></span>
@@ -224,32 +226,16 @@
                 </div>
               </div>
             </li>
-             -->
+               -->
             <div class="loader"></div>
           </ul>
         </div>
       </section>
 
-      <!-- 
-        <nav class="tabs">
-          <button class="tab">
-          <img src="/static/svgs/tab1.svg" alt="tab" />
-          Portfolio Tracker
-        </button>
-        <button class="tab">
-          <img src="/static/svgs/tab2.svg" alt="tab" />
-          insights
-        </button>
-        <button class="tab">
-          <img src="/static/svgs/tab3.svg" alt="tab" />
-          Expense Analyzer
-        </button>
-        <button class="tab">
-          <img src="/static/svgs/tab4.svg" alt="tab" />
-          Goal Tracker
-        </button>
-      </nav>
-       -->
+      <section class="news-section">
+        <h2>Top 5 News Headlines</h2>
+        <div id="news-container">Loading news...</div>
+      </section>
     </main>
 
     <!-- Footer -->

@@ -324,35 +324,9 @@ a:hover {
     display: none;
   }
 }
-
-main>.tabs {
-  background-color: var(--section-bg);
-  max-width: 1100px;
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  border: 1.5px solid var(--section-border);
-  border-radius: 10px;
-  margin: 0 auto 2.5rem auto;
-  padding: 10px 2rem;
+section {
+  margin: 10px;
 }
-
-main>.tabs button {
-  color: var(--muted-text);
-  border: none;
-  background-color: var(--section-bg);
-}
-
-main>.tabs button:active {
-  color: var(--primary-text);
-}
-
-main>.tabs button img {
-  width: 1rem;
-  height: 1rem;
-}
-
 /* Metrics */
 .metrics {
   max-width: 1160px;
@@ -576,7 +550,7 @@ main>.tabs button img {
 .trading-chart-section {
   min-height: 500px !important;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
@@ -683,7 +657,7 @@ main>.tabs button img {
   margin: 0 50px;
 }
 
-@media (min-width: 1500px) {
+@media (min-width: 1550px) {
   .panel {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -732,12 +706,8 @@ main>.tabs button img {
   border-radius: 6px;
   background-color: var(--section-bg);
   color: var(--primary-text);
-  border: 1px solid var(mut);
+  border: 1px solid var(--muted-text);
   transition: background 0.2s;
-}
-
-.tickers button:hover {
-  background-color: #222;
 }
 
 .tickers button.activebtn {
@@ -767,7 +737,7 @@ main>.tabs button img {
 }
 
 .button-group button:hover {
-  background-color: #333;
+  border: 1px solid var(--muted-text);
 }
 
 .button-group button.activebtn {
@@ -775,10 +745,6 @@ main>.tabs button img {
   color: black;
   font-weight: bold;
 }
-
-
-
-
 
 #company-card-list {
   width: 100%;
@@ -902,6 +868,49 @@ main>.tabs button img {
   float: right;
 }
 
+.news-card {
+  background: var(--section-bg);
+  color: var(--primary-text);
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.news-item {
+  border: 1px solid var(--muted-text);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.news-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.news-item a {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary-accent);
+  text-decoration: none;
+}
+
+.news-item a:hover {
+  text-decoration: underline;
+}
+
+.news-item p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.news-item small {
+  font-size: 12px;
+  color: var(--muted-text);
+}
 
 
 

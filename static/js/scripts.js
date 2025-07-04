@@ -43,29 +43,51 @@ document.querySelector(".buttons .themebtn").addEventListener("click", function 
     setTheme()
 });
 
-const marketChart = document.querySelector(".market-chart-section")
-const tradingChart = document.querySelector(".trading-chart-section")
+const metricsSection = document.querySelector(".metrics-section")
+const marketSection = document.querySelector(".market-chart-section")
+const tradingSection = document.querySelector(".trading-chart-section")
+const newsSection = document.querySelector(".news-section")
 const tradingBtn = document.getElementById("tradingbtn")
 const marketBtn = document.getElementById("chartbtn")
+const newsBtn = document.getElementById("newsbtn")
 
 function activeTradingChange() {
-    tradingChart.style.display = "flex"
-    marketChart.style.display = "none"
+    tradingSection.style.display = "flex"
+    marketSection.style.display = "none"
+    newsSection.style.display = "none"
+    metricsSection.style.display = "grid"
     tradingBtn.style.backgroundColor = "var(--active-tab-bg)"
     marketBtn.style.backgroundColor = "var(--section-bg)"
+    newsBtn.style.backgroundColor = "var(--section-bg)"
 }
 function activeMarketChange() {
-    marketChart.style.display = "block"
-    tradingChart.style.display = "none"
+    marketSection.style.display = "block"
+    tradingSection.style.display = "none"
+    newsSection.style.display = "none"
+    metricsSection.style.display = "grid"
     marketBtn.style.backgroundColor = "var(--active-tab-bg)"
+    tradingBtn.style.backgroundColor = "var(--section-bg)"
+    newsBtn.style.backgroundColor = "var(--section-bg)"
+}
+function activeNewsChange() {
+    newsSection.style.display = "block"
+    marketSection.style.display = "none"
+    tradingSection.style.display = "none"
+    metricsSection.style.display = "none"
+    newsBtn.style.backgroundColor = "var(--active-tab-bg)"
+    marketBtn.style.backgroundColor = "var(--section-bg)"
     tradingBtn.style.backgroundColor = "var(--section-bg)"
 }
 activeTradingChange()
+
 tradingBtn.addEventListener("click", () => {
     activeTradingChange()
 })
 marketBtn.addEventListener("click", () => {
     activeMarketChange()
+})
+newsBtn.addEventListener("click", () => {
+    activeNewsChange()
 })
 
 function handleResize() {
@@ -310,7 +332,7 @@ async function getTradingCharts() {
             //   volume: company.volume || 0
         };
         console.log(`time: ${initialBar.time}, open: ${initialBar.open}, close: ${initialBar.close}`)
-        
+
         candleSeries.setData([initialBar]);
         // Store references for updates & later “show”
         chartsByCompany[company.name] = {
@@ -320,6 +342,8 @@ async function getTradingCharts() {
             time: timeStamp
         };
     })
+    console.log(chartsByCompany);
+
     let intervalSec = 60;
     setTimeout(() => {
         setInterval(async () => {
@@ -499,7 +523,7 @@ async function showCompantList() {
 
     const detailButtons = document.querySelectorAll(".details-btn")
     detailButtons.forEach((btn, i) => {
-        btn.addEventListener("click", (e) => {
+        btn.addEventListener("click", () => {
             document.getElementById("symbol").textContent = tickerButtons[i].textContent;
             document.getElementById("companyName").textContent = companiesNames[i].innerHTML;
             tickerButtons.forEach(b => b.classList.remove("activebtn"));
@@ -507,7 +531,7 @@ async function showCompantList() {
             showTradingChart(companiesNames[i].innerHTML)
         })
     })
-    // Active toggle for tickers
+
     const tickerButtons = document.querySelectorAll("#tickers button");
     tickerButtons.forEach((btn, i) => {
         btn.addEventListener("click", () => {
@@ -529,3 +553,21 @@ async function showCompantList() {
 }
 showCompantList()
 
+
+async function loadTopNews() {
+    const res = await fetch("/news-data");
+    const news = await res.json();
+    const container = document.getElementById("news-container");
+    if (!container) return;
+
+    container.innerHTML = news.map(item => `
+      <div class="news-item">
+        <a href="${item.url}" target="_blank">${item.headline}</a>
+        <p>${item.summary}</p>
+        <small>${new Date(item.datetime * 1000).toLocaleString()}</small>
+        <hr/>
+      </div>
+    `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", loadTopNews);

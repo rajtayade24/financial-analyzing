@@ -204,9 +204,47 @@ def stock_data():
     # Return only the array of stock objects
     return jsonify(stock_cache)
 
+
+
+
+import requests
+from flask import request
+
+FINNHUB_API_KEY = "d1jn961r01qvg5gvjr40d1jn961r01qvg5gvjr4g"
+
+# ------------------- General News Endpoint -------------------
+@app.route("/news-data")
+def news_data():
+    url = f"https://finnhub.io/api/v1/news?category=general&token={FINNHUB_API_KEY}"
+    try:
+        resp = requests.get(url, timeout=5)
+        resp.raise_for_status()
+        news = resp.json()
+        return jsonify(news[:5])  # return top 5 articles
+    except requests.RequestException as e:
+        return jsonify({"error": "Failed to fetch general news", "details": str(e)}), 500
+
+# ------------------- Company-Specific News -------------------
+@app.route("/api/news")
+def get_news():
+    symbol = request.args.get("symbol")
+    from_date = request.args.get("from")
+    to_date = request.args.get("to")
+
+    if not all([symbol, from_date, to_date]):
+        return jsonify({"error": "Missing parameters"}), 400
+
+    url = f"https://finnhub.io/api/v1/company-news?symbol={symbol}&from={from_date}&to={to_date}&token={FINNHUB_API_KEY}"
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return jsonify(response.json())
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
+
+# ------------------- Run App -------------------
 if __name__ == "__main__":
     app.run(debug=True)
-
 
 # if __name__ == "__main__":
 #     server = Server(app.wsgi_app)
@@ -215,6 +253,16 @@ if __name__ == "__main__":
 #     server.watch('static/css')      # watches CSS, JS, logos
 #     # server.watch('templates/')   # watches index.html
 #     server.serve(port=5000, debug=True)
+
+
+
+
+
+
+
+
+
+
 
 
 
