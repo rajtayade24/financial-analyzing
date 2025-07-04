@@ -115,7 +115,7 @@ function inrToUsd(inrAmount, exchangeRate = 83.20) {
 
 async function fetchData() {
     console.log("fetching...")
-    const res = await fetch("http://127.0.0.1:5000/stock-data");
+    const res = await fetch("/stock-data");
     const data = await res.json();
     return data;
 }
