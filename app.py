@@ -12,7 +12,6 @@ REFRESH_INTERVAL = 300  # seconds between cache refreshes
 MAX_BATCH = 10          # max symbols per batch download
 API_KEY = os.getenv("FINNHUB_API_KEY", "d1jn961r01qvg5gvjr40d1jn961r01qvg5gvjr4g")
 
-
 companies = {
     "Reliance Industries": "RELIANCE.NS",
     "HDFC Bank": "HDFCBANK.NS",
