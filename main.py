@@ -4,18 +4,8 @@ import threading
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import yfinance as yf
-<<<<<<< HEAD
 from flask import Flask, jsonify, render_template
 from  livereload import Server
-=======
-from flask import Flask, jsonify, render_template, request
-import requests
-
-# Configuration
-REFRESH_INTERVAL = 300  # seconds between cache refreshes
-MAX_BATCH = 10          # max symbols per batch download
-API_KEY = os.getenv("FINNHUB_API_KEY", "d1k0dbhr01ql1h39s480d1k0dbhr01ql1h39s48g")
->>>>>>> 85357a5bedb3762f5b9ac6d11c622e3ac20faf70
 
 companies = {
     "Reliance Industries": "RELIANCE.NS",
@@ -55,7 +45,7 @@ companies = {
     "Asian Paints": "ASIANPAINT.NS",
     "DLF": "DLF.NS",
     "Trent": "TRENT.NS",
-    # "InterGlobe Aviation (IndiGo)": "INDIGO.NS",
+    "InterGlobe Aviation (IndiGo)": "INDIGO.NS",
     "Adani Power": "ADANIPOWER.NS",
     # "Zomato": "ZOMATO.NS",
     "Tata Steel": "TATASTEEL.NS",
