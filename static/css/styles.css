@@ -197,7 +197,7 @@ header aside .submenubtn-cont:hover .label {
   width: 40px;
   justify-content: center;
   border-radius: 50%;
-  border: 2px solid black;
+  border: 2px solid var(--section-border);
   margin-top: 5px;
   padding: 0;
 }

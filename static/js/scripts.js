@@ -37,9 +37,12 @@ function setTheme() {
 
 document.querySelector(".buttons .themebtn").addEventListener("click", function (e) {
     this.style.backgroundColor = isDark ? ' #3b0764' : '#f8fafc';
+    this.querySelector("img").classList.toggle("invert");
+  
     document.querySelectorAll("header aside button img").forEach(e => {
         e.classList.toggle("invert")
     })
+  
     setTheme()
 });
 
@@ -144,8 +147,8 @@ async function drawLineChart() {
                     fill: false,
                     tension: 0.1,
                     hoverBorderWidth: 50,
+                    borderColor: "#4f8ef7",
                     pointBorderColor: "grey",
-                    borderColor: "#4f8ef7"
                 }
             ]
         },
@@ -153,12 +156,14 @@ async function drawLineChart() {
             scales: {
                 x: {
                     ticks: {
+                        color: "#eee",
                         autoSkip: false,
                     }
                 },
-
+                
                 y: {
                     ticks: {
+                        color: "#eee",
                         callback: function (value, index, ticks) {
                             return '$' + value;
                         }
@@ -202,6 +207,7 @@ async function drawBarChart() {
                         color: "#444"
                     },
                     ticks: {
+                        color: "#eee",
                         autoSkip: false
                     }
                 },
@@ -211,6 +217,7 @@ async function drawBarChart() {
                         color: "#444"
                     },
                     ticks: {
+                        color: "#eee",
                         callback: function (value, index, ticks) {
                             return '$' + value;
                         }
@@ -234,6 +241,7 @@ async function drawPieChart() {
             }]
         },
         options: {
+            color: "#eee",
             plugins: {
                 legend: { display: true, position: "bottom" },
                 tooltip: { backgroundColor: "#fff", borderColor: "#ddd", borderWidth: 1, titleColor: "#1e293b", bodyColor: "#1e293b" }
@@ -360,8 +368,8 @@ async function getTradingCharts() {
                     // time: chartObj.time + intervalSec,
                     time: (timeNow || chartObj.time + intervalSec),
                     open: lastClose,
-                    high: company.price + Math.floor(Math.random() * 6),
-                    low: lastClose - Math.floor(Math.random() * 6),
+                    high: company.price + Math.floor(Math.random() * 2),
+                    low: lastClose - Math.floor(Math.random() * 2),
                     close: company.price
                 };
                 console.log(`time: ${nextBar.time}, open: ${nextBar.open}, close: ${nextBar.close}`)
@@ -406,7 +414,6 @@ async function showTradingChart(companyName) {
         closeEl.textContent = `$${data.close.toFixed(2)}`;
 
         const rect = document.getElementById('charts-container').getBoundingClientRect();
-        console.log(rect.left, window.scrollX, param.point.x)
         if (window.innerWidth - rect.left - param.point - 140 - 20 <= 0) {
             tooltip.style.left = rect.left + window.scrollX + param.point.x - 140 - 20 + 'px'; // rect.left - hori dist of chart from left window
         } else {

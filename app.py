@@ -50,7 +50,7 @@ companies = {
     "Asian Paints": "ASIANPAINT.NS",
     "DLF": "DLF.NS",
     "Trent": "TRENT.NS",
-    "InterGlobe Aviation (IndiGo)": "INDIGO.NS",
+    # "InterGlobe Aviation (IndiGo)": "INDIGO.NS",
     "Adani Power": "ADANIPOWER.NS",
     # "Zomato": "ZOMATO.NS",
     "Tata Steel": "TATASTEEL.NS",
