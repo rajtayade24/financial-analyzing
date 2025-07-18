@@ -73,6 +73,10 @@ def form():
 def signin():
     return render_template('signin.html')
 
+@app.route('/learn-more.html')
+def learnMore():
+    return render_template('learn-more.html')
+
 # 2. Shared cache
 stock_cache = []
 last_updated = None

@@ -116,6 +116,12 @@ function inrToUsd(inrAmount, exchangeRate = 83.20) {
     return usdAmount.toFixed(2); // returns a string with 2 decimal places
 }
 
+function resetChart(chartInstance) {
+    if (chartInstance) {
+        chartInstance.destroy();
+    }
+}
+
 async function fetchData() {
     console.log("fetching...")
     const res = await fetch("/stock-data");
@@ -147,7 +153,6 @@ async function drawLineChart() {
             ]
         },
         options: {
-            responsive: true,
             scales: {
                 x: {
                     ticks: {
@@ -245,18 +250,6 @@ async function drawPieChart() {
 
     });
 }
-
-function resetChart(chartInstance) {
-    if (chartInstance) {
-        chartInstance.destroy();
-    }
-}
-window.addEventListener("resize", () => {
-    if (chartInstance) {
-        chartInstance.resize();
-    }
-});
-
 let barChartBtn = document.getElementById("barChartBtn")
 let lineChartBtn = document.getElementById("lineChartBtn")
 let pieChartBtn = document.getElementById("pieChartBtn")

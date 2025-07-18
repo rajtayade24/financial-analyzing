@@ -178,13 +178,17 @@ header aside .submenubtn-cont:hover .label {
 }
 
 .btn-primary {
-  background-color: #7c3aed;
+  background-color: #6d28d9;
   border: none;
-  color: white;
+  transition: background 0.2s ease-out;
 }
 
 .btn-primary:hover {
-  background-color: #6d28d9;
+  background-color: #7c3aed;
+}
+
+.btn-primary:active {
+  background-color: #9b6be8;
 }
 
 .btn-primary img {
@@ -200,6 +204,7 @@ header aside .submenubtn-cont:hover .label {
   border: 2px solid var(--section-border);
   margin-top: 5px;
   padding: 0;
+  transition: background .3s ease-out;
 }
 
 .themebtn img {
@@ -309,6 +314,13 @@ main {
   color: #f1f5f9;
   transform: scale(1.05);
 }
+
+.primary-btn a,
+.outline-btn a {
+  color: white;
+  text-decoration: none;
+}
+
 
 .header-illustration {
   display: block;
